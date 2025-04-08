@@ -39,8 +39,9 @@ nav{
   padding-right: 30px;
 }
 
-.nav-items > p{
+.nav-items > a{
   padding : 0 7px;
+  text-decoration : none;
 }
 
 .logo{
@@ -48,8 +49,11 @@ nav{
   width : auto;
 }
 
-.searchBox > input{
+.searchBox{
   position:relative;
+}
+
+.searchBox > input{
   height: 30px;
   padding-left : 12px;
   padding-right : 30px;
@@ -68,7 +72,10 @@ nav{
 }
 
 .searchIcon{
-  postion : absolute;
+  position : absolute;
   height : 25px;
+  top: 50%;
+  right : 10px;
+  transform : translateY(-50%);
 }
 /* 돋보기 모양 absolute로 세로 가운데 정렬하기 */
