@@ -1,20 +1,29 @@
 import { useState } from "react";
 import UserInfo from "../components/userInfo";
-import './userInfos.css'
+import styles from './userInfos.module.css';
 import CardItems from "../components/cardItems";
-import dummyData from '../../dummyData.json'
+import dummyData from '../../dummyData.json';
 
 export default function UserInfos() {
-  let [itemNum, setItemNum] = useState('6');
+  const [dummies, setDummy] = useState(dummyData);
+
+  let [itemNum, setItemNum] = useState(dummies.length);
   return (
     <>
       <UserInfo />
-      <div className="salingBox">
+      <div className={styles.salingBox}>
         <p>상품</p>
-        <p className="count">{itemNum}</p>
-        <div className="itemList">
+        <p className={styles.count}>{itemNum}</p>
+        <div className={styles.itemList}>
         </div>
-      </div>
+        <div className={styles.salingItems}>
+          {
+            dummies.map((e) => (
+              <CardItems title={e.title} price={e.price} date={e.date} />
+            ))
+          }
+        </div>
+      </div >
     </>
   )
 }

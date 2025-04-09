@@ -14,3 +14,13 @@ body{
   width : 100vw;
   margin :0;
 }
+
+nav{
+  background-color : white;
+  position : fixed;
+  display : flex;
+  justify-content: center;
+  width: 100vw;
+  height: 80px;
+  box-shadow : 0 5px 5px #d5d5d5;
+}

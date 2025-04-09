@@ -38,16 +38,16 @@
   margin-bottom : 30px;
 }
 
-.list-items{
+.listItems{
   margin-right : 20px;
 }
 
-.list-items > .option{
+.listItems > .option{
   margin-right : 10px;
   color : #666666;
 }
 
-.list-items, .list-items > p{
+.listItems, .listItems > p{
   display : inline-block;
 }
 

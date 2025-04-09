@@ -1,6 +1,6 @@
 import { use, useState } from 'react';
 
-import './userInfo.css';
+import styles from './userInfo.module.css';
 import profileImage from '../assets/default_image.jpg';
 
 export default function UserInfo() {
@@ -13,26 +13,26 @@ export default function UserInfo() {
   )
 
   return (
-    <div className="userInfo">
-      <div className='profilebox'>
-        <img className='profileImage' src={profileImage} />
+    <div className={styles.userInfo}>
+      <div className={styles.profilebox}>
+        <img className={styles.profileImage} src={profileImage} />
       </div>
-      <div className='infobox'>
+      <div className={styles.infobox}>
         <div>
-          <h2 className='nickname'>{nickname}</h2>
-          <div className='list-items'>
-            <p className='option'>상점오픈일</p>
+          <h2 className={styles.nickname}>{nickname}</h2>
+          <div className={styles.listItems}>
+            <p className={styles.option}>상점오픈일</p>
             <p>{openDate}일 전</p>
           </div>
-          <div className='list-items'>
-            <p className='option'>상품판매</p>
+          <div className={styles.listItems}>
+            <p className={styles.option}>상품판매</p>
             <p>{sellCount} 회</p>
           </div>
-          <div className='profileDescription'>
+          <div className={styles.profileDescription}>
             <p>{description}</p>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

@@ -1,13 +1,3 @@
-nav{
-  background-color : white;
-  position : fixed;
-  display : flex;
-  justify-content: center;
-  width: 100vw;
-  height: 80px;
-  box-shadow : 0 5px 5px #d5d5d5;
-}
-
 .container{
   display : flex;
   height: 80px;
@@ -16,12 +6,12 @@ nav{
   align-items : center;
 }
 
-.nav-items{
+.navItems{
   display : flex;
   padding-right: 30px;
 }
 
-.nav-items > a{
+.navItems > a{
   padding : 0 7px;
   text-decoration : none;
   color : black;
