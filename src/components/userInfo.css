@@ -1,0 +1,69 @@
+.userInfoContainer{
+  width : 100vw;
+  height : auto;
+}
+
+.userInfo{
+  display : grid;
+  grid-template-columns : repeat(12, 1fr);
+  grid-template-rows : repeat(2, 1fr);
+  gap : 1.5rem;
+  margin : 0 auto;
+  width : 70%;
+  height : 550px;
+}
+
+.profilebox{
+  display : grid;
+  place-items : center;
+  grid-row : span 2;
+  grid-column : span 4;
+}
+
+.profileImage{
+  width : 260px;
+  height : auto;
+  border-radius : 50%;
+}
+
+.infobox{
+  display : grid;
+  align-items : center;
+  grid-row : span 2;
+  grid-column : span 8;
+}
+
+.nickname{
+  font-weight : 600;
+  margin-bottom : 30px;
+}
+
+.list-items{
+  margin-right : 20px;
+}
+
+.list-items > .option{
+  margin-right : 10px;
+  color : #666666;
+}
+
+.list-items, .list-items > p{
+  display : inline-block;
+}
+
+.profileDescription{
+  height : 100px;
+  width : 80%;
+  margin-top : 30px;
+}
+
+.profileDescription > p{
+  margin : 0;
+  width : 100%;
+  height : 100%;
+  white-space : pre-wrap;
+}
+
+.salingContainer{
+  width : 100vw;
+}
