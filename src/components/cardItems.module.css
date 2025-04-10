@@ -28,11 +28,14 @@
 .cardTitle{
   display : grid;
   grid-row : span 1;
+  border-top : 1px solid lightgray;
+  padding : 0 5px;
 }
 
 .cardInfos{
   display : grid;
   grid-row : span 1;
+  padding : 0 5px;
 }
 
 .cardInfos > div{
