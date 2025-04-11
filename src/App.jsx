@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import FindId from './pages/FindId';
 import ResetPwd from './pages/ResetPwd';
 import NewPwd from './pages/NewPwd';
+import DajungDajung from './pages/DajungDajung';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/findid" element={<FindId />} />
           <Route path="/resetpwd" element={<ResetPwd />} />
           <Route path="/newpwd" element={<NewPwd />} />
+          <Route path="/dajungdajung" element={<DajungDajung />} />
         </Routes>
       </main>
 

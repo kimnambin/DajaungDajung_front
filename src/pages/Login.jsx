@@ -16,9 +16,17 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    const { email, password } = form;
+
+    if (email.trim() === '' || password.trim() === '') {
+      alert('이메일과 비밀번호를 모두 입력해주세요.');
+      return;
+    }
+
     console.log('로그인 정보:', form);
-    alert('로그인 요청이 준비되었습니다.');
-    // 나중에 axios.post('/api/login', form) 연결 가능
+    alert('로그인 성공! 메인페이지로 이동합니다.');
+    navigate('/dajungdajung');
   };
 
   return (
