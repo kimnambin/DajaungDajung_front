@@ -6,6 +6,7 @@ import UserInfos from './pages/UserInfos/userInfos';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MyPage from './pages/MyPage/myPage';
 import UserInfo from './components/userInfo/userInfo';
+import UpdateInfo from './components/updateInfo/UpdateInfo';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/store' element={<UserInfos />} />
         <Route path='/users' element={<MyPage />}>
           <Route path='mypage' element={<UserInfo />} />
+          <Route path='mypage/update' element={<UpdateInfo />} />
         </Route>
       </Routes>
       <Footer />
