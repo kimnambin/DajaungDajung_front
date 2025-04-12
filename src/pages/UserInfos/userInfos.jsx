@@ -1,8 +1,8 @@
 import { useState } from "react";
-import UserInfo from "../components/userInfo";
+import UserInfo from "../../components/userInfo/userInfo";
 import styles from './userInfos.module.css';
-import CardItems from "../components/cardItems";
-import dummyData from '../../dummyData.json';
+import CardItems from "../../components/cardItem/cardItems";
+import dummyData from '../../../dummyData.json';
 
 export default function UserInfos() {
   const [dummies, setDummy] = useState(dummyData);

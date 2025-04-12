@@ -1,7 +1,7 @@
 import { use, useState } from 'react';
 
 import styles from './userInfo.module.css';
-import profileImage from '../assets/default_image.jpg';
+import profileImage from '../../assets/default_image.jpg';
 
 export default function UserInfo() {
   let [nickname, setNickname] = useState('닉네임');
@@ -31,6 +31,24 @@ export default function UserInfo() {
           <div className={styles.profileDescription}>
             <p>{description}</p>
           </div>
+        </div>
+        <div className={styles.extraInfo}>
+          <table>
+            <tbody>
+              <tr>
+                <td className={styles.tTitle}>이름</td>
+                <td className={styles.tContent}>가나다</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>이메일</td>
+                <td className={styles.tContent}>aa123@emil.com</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>전화번호</td>
+                <td className={styles.tContent}>010-1111-2222</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div >

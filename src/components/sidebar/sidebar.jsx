@@ -1,0 +1,23 @@
+import { NavLink, useLocation } from 'react-router'
+import style from './sidebar.module.css'
+
+export default function Sidebar() {
+  return (
+    <div>
+      <div className={style.a}>
+      </div>
+      <div className={style.b}>
+        <div className={style.Sidebar}>
+          <h1>마이페이지</h1>
+          <NavLink to='mypage' className={({ isActive }) => isActive ? style.sidebarItemActive : style.sidebarItem}>
+            유저 정보 조회
+          </NavLink>
+          <NavLink className={style.sidebarItem}>유저 정보 수정</NavLink>
+          <NavLink className={style.sidebarItem}>등록한 상품</NavLink>
+          <NavLink className={style.sidebarItem}>좋아요</NavLink>
+          <NavLink className={style.sidebarItem}>탈퇴하기</NavLink>
+        </div>
+      </div>
+    </div>
+  )
+}
