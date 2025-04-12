@@ -17,7 +17,7 @@ export default function Sidebar() {
           </NavLink>
           <NavLink className={style.sidebarItem}>등록한 상품</NavLink>
           <NavLink className={style.sidebarItem}>좋아요</NavLink>
-          <NavLink className={style.sidebarItem}>탈퇴하기</NavLink>
+          <NavLink to='unsubscribe' className={({ isActive }) => isActive ? style.sidebarItemActive : style.sidebarItem} end>탈퇴하기</NavLink>
         </div>
       </div>
     </div>
