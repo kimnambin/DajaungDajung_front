@@ -1,57 +1,112 @@
 [
   {
-    "title": "상품명 1",
-    "price": "7200",
-    "date": "4"
+    "id": 1,
+    "category": "전자기기",
+    "title": "Apple AirPods Pro 2세대",
+    "price": 270000,
+    "postedAt": "2025-04-10",
+    "description": "최신형 에어팟 프로 2세대입니다. 사용감 거의 없고, 박스와 구성품 모두 포함되어 있습니다.",
+    "likes": 24,
+    "seller": "홍길동",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 2",
-    "price": "50000",
-    "date": "1"
+    "id": 2,
+    "category": "패션",
+    "title": "나이키 에어맥스 270",
+    "price": 120000,
+    "postedAt": "2025-04-08",
+    "description": "사이즈 270, 몇 번 안 신어서 상태 좋습니다.",
+    "likes": 15,
+    "seller": "김영희",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 3",
-    "price": "300",
-    "date": "9"
+    "id": 3,
+    "category": "생활용품",
+    "title": "샤오미 무선 청소기",
+    "price": 80000,
+    "postedAt": "2025-04-07",
+    "description": "작동 잘 됩니다. 새 제품 구매로 판매합니다.",
+    "likes": 9,
+    "seller": "이철수",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 4",
-    "price": "8900",
-    "date": "3"
+    "id": 4,
+    "category": "가전제품",
+    "title": "LG 43인치 스마트 TV",
+    "price": 320000,
+    "postedAt": "2025-04-05",
+    "description": "리모컨 포함, 1년 사용한 깨끗한 TV입니다.",
+    "likes": 31,
+    "seller": "박지민",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 5",
-    "price": "100000",
-    "date": "6"
+    "id": 5,
+    "category": "취미/게임/음반",
+    "title": "닌텐도 스위치 OLED 화이트",
+    "price": 350000,
+    "postedAt": "2025-04-09",
+    "description": "풀박스, 보호필름 부착, 상태 최상입니다.",
+    "likes": 42,
+    "seller": "정해인",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 6",
-    "price": "1500",
-    "date": "7"
+    "id": 6,
+    "category": "도서",
+    "title": "이것이 자바다 (개정판)",
+    "price": 18000,
+    "postedAt": "2025-04-03",
+    "description": "필기 거의 없이 깨끗하게 봤습니다.",
+    "likes": 5,
+    "seller": "최수정",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 7",
-    "price": "42000",
-    "date": "10"
+    "id": 7,
+    "category": "반려동물용품",
+    "title": "고양이 자동급식기",
+    "price": 40000,
+    "postedAt": "2025-04-06",
+    "description": "USB 작동, 타이머 설정 가능. 한 달 사용.",
+    "likes": 7,
+    "seller": "강민경",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 8",
-    "price": "800",
-    "date": "2"
+    "id": 8,
+    "category": "유아동",
+    "title": "보행기 겸 유아의자",
+    "price": 25000,
+    "postedAt": "2025-04-01",
+    "description": "깨끗하게 사용했고 튼튼해요. 직접 가져가시면 할인해드려요.",
+    "likes": 4,
+    "seller": "윤서진",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 9",
-    "price": "9600",
-    "date": "5"
+    "id": 9,
+    "category": "스포츠/레저",
+    "title": "골프 퍼터 연습기",
+    "price": 30000,
+    "postedAt": "2025-04-02",
+    "description": "실내 연습용으로 좋아요. 거의 새 제품입니다.",
+    "likes": 11,
+    "seller": "오승훈",
+    "imageUrl": "https://via.placeholder.com/300"
   },
   {
-    "title": "상품명 10",
-    "price": "3700",
-    "date": "8"
-  },
-  {
-    "title": "상품명 11",
-    "price": "100",
-    "date": "1"
+    "id": 10,
+    "category": "가구",
+    "title": "이케아 책상 + 의자 세트",
+    "price": 70000,
+    "postedAt": "2025-04-04",
+    "description": "흰색 책상과 회색 의자 세트로 판매합니다. 생활 기스 조금 있어요.",
+    "likes": 20,
+    "seller": "배유진",
+    "imageUrl": "https://via.placeholder.com/300"
   }
 ]
