@@ -2,7 +2,7 @@
   "items" : [
   {
     "id": 1,
-    "category": "전자기기",
+    "category": "디지털기기",
     "title": "Apple AirPods Pro 2세대",
     "price": 270000,
     "postedAt": "2025-04-10",
@@ -13,7 +13,7 @@
   },
   {
     "id": 2,
-    "category": "패션",
+    "category": "남성패션/잡화",
     "title": "나이키 에어맥스 270",
     "price": 120000,
     "postedAt": "2025-04-08",
@@ -24,7 +24,7 @@
   },
   {
     "id": 3,
-    "category": "생활용품",
+    "category": "생활/주방",
     "title": "샤오미 무선 청소기",
     "price": 80000,
     "postedAt": "2025-04-07",
@@ -35,7 +35,7 @@
   },
   {
     "id": 4,
-    "category": "가전제품",
+    "category": "생활가전",
     "title": "LG 43인치 스마트 TV",
     "price": 320000,
     "postedAt": "2025-04-05",
@@ -101,7 +101,7 @@
   },
   {
     "id": 10,
-    "category": "가구",
+    "category": "가구/인테리어",
     "title": "이케아 책상 + 의자 세트",
     "price": 70000,
     "postedAt": "2025-04-04",
@@ -112,6 +112,10 @@
   }
 ],
   "categories": [
+    {
+      "id": 0,
+      "name": "전체"
+    },
     {
       "id": 1,
       "name": "디지털기기"

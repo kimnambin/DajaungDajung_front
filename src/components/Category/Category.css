@@ -1,5 +1,5 @@
 .category_container {
-    width: 188px;
+    min-width: 188px;
 }
 
 .category_line {
@@ -13,4 +13,5 @@
 .category {
     display: flex;
     gap: 5px;
+    cursor: pointer;
 }
