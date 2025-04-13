@@ -1,0 +1,10 @@
+.container {
+    flex: 1;
+    margin: 40px 280px;
+    width: 80%;
+}
+
+.search_container {
+    display: flex;
+    gap: 8px;
+}
