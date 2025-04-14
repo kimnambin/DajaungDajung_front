@@ -9,6 +9,8 @@ import UserInfo from './components/userInfo/userInfo';
 import UpdateInfo from './components/updateInfo/UpdateInfo';
 import Unsubscribe from './pages/unsubscribe/Unsubscribe';
 import ScrollToTop from './components/scrollToTop';
+import UploadItems from './pages/UploadItems/UploadItems';
+import UserLikes from './pages/UserLikes/UserLikes';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path='mypage' element={<UserInfo />} />
           <Route path='mypage/update' element={<UpdateInfo />} />
           <Route path='unsubscribe' element={<Unsubscribe />} />
+          <Route path='upload' element={<UploadItems />} />
+          <Route path='likes' element={<UserLikes />} />
         </Route>
       </Routes>
       <Footer />
