@@ -1,12 +1,18 @@
 import style from './UpdateInfo.module.css'
 import profileImage from '../../assets/default_image.jpg';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function UpdateInfo() {
+  const navigate = useNavigate();
+  const toMain = () => {
+    navigate('/users/mypage');
+  }
   return (
     <form className={style.updateInfoContainer}>
       <div className={style.imageBox}>
         <img src={profileImage} alt="" />
-        <button type="submit">업로드</button>
+        <button type="file">업로드</button>
       </div>
       <div className={style.inputContainer}>
         <input type="text" name="name" placeholder='이름' />
@@ -19,8 +25,8 @@ export default function UpdateInfo() {
       </div>
       <hr />
       <div className={style.buttonContainer}>
-        <button type="submit">수정하기</button>
-        <button type="button">다시쓰기</button>
+        <button type="submit" onClick={toMain}>수정하기</button>
+        <button type="reset">다시쓰기</button>
       </div>
     </form>
   )

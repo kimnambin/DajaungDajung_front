@@ -9,7 +9,9 @@ function Header() {
   return (
     <nav>
       <div className={styles.container}>
-        <img src={Logo} className={styles.logo} />
+        <Link to='/' className={styles.logo}>
+          <img src={Logo} className={styles.logo} />
+        </Link>
         <form className={styles.searchBox} method='post'>
           <input placeholder='검색어를 입력하세요' />
           <img className={styles.searchIcon} src={searchIcon} />
