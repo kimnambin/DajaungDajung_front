@@ -1,7 +1,8 @@
 .item_container {
     border: 1px solid #f2f2f2;
     border-radius: 5px;
-    height: max-content;
+    height: 280px;
+    padding-bottom: 4px;
     cursor: pointer;
 }
 
@@ -12,6 +13,7 @@
 .item_subContent {
     display: flex;
     justify-content: space-between;
+    margin-top: 8px;
 }
 
 .item_title {

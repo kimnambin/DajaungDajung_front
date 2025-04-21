@@ -3,8 +3,9 @@ import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import UserInfos from './pages/userInfos';
-import ItemCreate from './pages/Items/ItemCreate';
-import ItemSearch from './pages/Items/ItemSearch';
+import ItemsCreate from './pages/ItemsCreate/ItemsCreate';
+import ItemsSearch from './pages/ItemsSearch/ItemsSearch';
+import Items from './pages/Items/Items';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<UserInfos />} />
-          <Route path="/items/create" element={<ItemCreate />} />
-          <Route path="/items" element={<ItemSearch />}/>
+          <Route path="/items/create" element={<ItemsCreate />} />
+          <Route path="/items" element={<ItemsSearch />}/>
+          <Route path="/items/:id" element={<Items />} />
         </Routes>
       </main>
 
