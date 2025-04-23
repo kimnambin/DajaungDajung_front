@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './DajungDajung.css';
 
-import banner1 from '../assets/banner1.png';
-import banner2 from '../assets/banner2.png';
+import banner1 from "../../assets/banner1.png";
+import banner2 from "../../assets/banner2.png";
 
 const bannerImages = [banner1, banner2];
 const ITEMS_PER_PAGE = 10;

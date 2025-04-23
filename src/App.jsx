@@ -3,12 +3,12 @@ import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import UserInfos from './pages/userInfos';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import FindId from './pages/FindId';
-import ResetPwd from './pages/ResetPwd';
-import NewPwd from './pages/NewPwd';
-import DajungDajung from './pages/DajungDajung';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
+import FindId from './pages/FindId/FindId';
+import ResetPwd from './pages/ResetPwd/ResetPwd';
+import NewPwd from './pages/NewPwd/NewPwd';
+import DajungDajung from './pages/MainHome/DajungDajung';
 
 function App() {
   return (
