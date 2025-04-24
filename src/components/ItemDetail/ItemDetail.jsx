@@ -4,11 +4,13 @@ import sampleImg from '../../assets/sampleImg.svg';
 import { getDaysAgo } from '../../utils/date';
 import unLikeIcon from '../../assets/ic_unlike.svg';
 import likeIcon from '../../assets/ic_like.svg';
+import Comments from '../Comments/Comments';
 
 const ItemDetail = ({item}) => {
     const [isSeller,, setIsSeller] = React.useState(true);
     const [isLike, setIsLike] = React.useState(false);
     return (
+        <>
         <div className='item_detail_container'>
             <div className='item_detail_left'>
                 <img src={sampleImg} alt="Item" style={{borderRadius: `10px`}}/>
@@ -58,6 +60,11 @@ const ItemDetail = ({item}) => {
                 </div>
             </div>
         </div>
+
+        <div className='line' />
+
+        <Comments />
+        </>
     )
 }
 

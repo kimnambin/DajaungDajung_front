@@ -126,3 +126,10 @@ p {
     border: none;
     background-color: #EC7FA9;
 }
+
+.line {
+    height: 1px;
+    background-color: #f0f0f0; 
+    width: 90%;
+    margin: 60px 0;
+}
