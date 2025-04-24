@@ -5,15 +5,26 @@ import { getDaysAgo } from '../../utils/date';
 import unLikeIcon from '../../assets/ic_unlike.svg';
 import likeIcon from '../../assets/ic_like.svg';
 import Comments from '../Comments/Comments';
+import { useNavigate } from 'react-router-dom';
+import { formatNumber } from '../../utils/format';
 
 const ItemDetail = ({item}) => {
-    const [isSeller,, setIsSeller] = React.useState(true);
+    const navigate = useNavigate();
+
+    const [isSeller, setIsSeller] = React.useState(true);
     const [isLike, setIsLike] = React.useState(false);
+
+    const handleEdit = (id) => {
+        navigate(`/items/edit/${id}`, { state: { item, isEdit: true } });
+    }
+
     return (
         <>
         <div className='item_detail_container'>
             <div className='item_detail_left'>
-                <img src={sampleImg} alt="Item" style={{borderRadius: `10px`}}/>
+                <div className="img_wrapper">
+                    <img src={item.imageUrl} alt="Item" />  
+                </div>
                 <div className='item_seller_container'>
                     <div className='item_seller'>
                         <img src={sampleImg} alt="Item" width={64} style={{borderRadius: `100px`}}/>
@@ -26,7 +37,7 @@ const ItemDetail = ({item}) => {
             <div className='item_detail_right'>
                 <p className='item_detail_category'>{item.category}</p>
                 <p className='item_detail_title'>{item.title}</p>
-                <p className='item_detail_price'>{item.price}원</p>
+                <p className='item_detail_price'>{formatNumber(item.price)}원</p>
                 <p className='item_detail_date'>{getDaysAgo(item.postedAt)}</p>
                 <p className='item_detail_info'>{item.description}</p>
 
@@ -39,7 +50,7 @@ const ItemDetail = ({item}) => {
                         </div>
                     </button>
                     {isSeller ? 
-                        <button className='item_detail_btn mid_btn'>
+                        <button className='item_detail_btn mid_btn' onClick={() => handleEdit(item.id)}>
                         수정하기
                         </button>
                      : 

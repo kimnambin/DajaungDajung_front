@@ -9,7 +9,8 @@ const Item = ({item}) => {
 
     return (
         <div className='item_container' onClick={() => navigate(`/items/${item.id}`)}>
-            <img src={sampleImg} width={220}/>
+            <img src={item.imageUrl ? item.imageUrl : sampleImg} width={220} height={220}/>
+            
             <p className='item_title'>{item.title}</p>
             <div className='item_subContent'>
                 <p className='item_price'>{item.price}원</p>

@@ -4,6 +4,7 @@
     height: 280px;
     padding-bottom: 4px;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .item_container p {

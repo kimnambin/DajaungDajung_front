@@ -6,6 +6,7 @@ import UserInfos from './pages/userInfos';
 import ItemsCreate from './pages/ItemsCreate/ItemsCreate';
 import ItemsSearch from './pages/ItemsSearch/ItemsSearch';
 import Items from './pages/Items/Items';
+import ItemsEdit from './pages/ItemsEdit/ItemsEdit';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/items/create" element={<ItemsCreate />} />
           <Route path="/items" element={<ItemsSearch />}/>
           <Route path="/items/:id" element={<Items />} />
+          <Route path="/items/edit/:id" element={<ItemsEdit />} />
         </Routes>
       </main>
 
