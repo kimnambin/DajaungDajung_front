@@ -1,7 +1,7 @@
 import React from 'react';
 import './Comments.css';
-import default_profile from '../../assets/default_profile.svg';
-import delete_btn from '../../assets/ic_x.svg';
+import default_profile from '../../../assets/default_profile.svg';
+import delete_btn from '../../../assets/ic_x.svg';
 
 const Comments = () => {
     return (

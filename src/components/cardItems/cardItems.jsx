@@ -1,5 +1,5 @@
 import styles from './cardItems.module.css'
-import defaultImage from '../assets/default_item_image.jpg'
+import defaultImage from '../../assets/default_item_image.jpg'
 
 export default function CardItems({ title, price, date }) {
   return (

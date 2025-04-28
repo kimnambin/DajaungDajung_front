@@ -1,9 +1,9 @@
 import React from 'react';
 import './ItemsSearch.css';
 import { useLocation } from 'react-router-dom';
-import Category from '../../components/Category/Category';
-import Item from '../../components/Item/Item';
 import data from '../../../dummyData.json';
+import Category from '../../components/items/category/Category';
+import Item from '../../components/items/item/Item';
 
 const ItemsSearch = () => {
     const location = useLocation();

@@ -1,7 +1,7 @@
 import { use, useState } from 'react';
 
 import styles from './userInfo.module.css';
-import profileImage from '../assets/default_image.jpg';
+import profileImage from '../../assets/default_image.jpg';
 
 export default function UserInfo() {
   let [nickname, setNickname] = useState('닉네임');

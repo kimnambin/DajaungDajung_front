@@ -1,12 +1,12 @@
 import React from 'react';
 import './ItemDetail.css';
-import sampleImg from '../../assets/sampleImg.svg';
-import { getDaysAgo } from '../../utils/date';
-import unLikeIcon from '../../assets/ic_unlike.svg';
-import likeIcon from '../../assets/ic_like.svg';
-import Comments from '../Comments/Comments';
+import sampleImg from '../../../assets/sampleImg.svg';
+import { getDaysAgo } from '../../../utils/date';
+import unLikeIcon from '../../../assets/ic_unlike.svg';
+import likeIcon from '../../../assets/ic_like.svg';
+import Comments from '../comments/Comments';
 import { useNavigate } from 'react-router-dom';
-import { formatNumber } from '../../utils/format';
+import { formatNumber } from '../../../utils/format';
 
 const ItemDetail = ({item}) => {
     const navigate = useNavigate();

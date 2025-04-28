@@ -1,8 +1,8 @@
 import React from 'react';
 import './Category.css';
-import data from '../../../dummyData.json';
-import selectedIcon from '../../assets/ic_selected.svg';
-import unselectedIcon from '../../assets/ic_unselected.svg';
+import data from '../../../../dummyData.json';
+import selectedIcon from '../../../assets/ic_selected.svg';
+import unselectedIcon from '../../../assets/ic_unselected.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Category = ({selectedCategory, keyword}) => {

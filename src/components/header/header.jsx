@@ -1,5 +1,5 @@
-import Logo from '../assets/Logo.png'
-import searchIcon from '../assets/searchIcon.png'
+import Logo from '../../assets/Logo.png'
+import searchIcon from '../../assets/searchIcon.png'
 import { useState } from 'react'
 import styles from './header.module.css'
 import { Link } from 'react-router-dom'

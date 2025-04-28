@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './ItemRegister.css'
-import SampleImg from '../../assets/sampleImg.svg';
-import { formatNumber } from '../../utils/format';
+import SampleImg from '../../../assets/sampleImg.svg';
+import { formatNumber } from '../../../utils/format';
 
 const onlyNumber = (str) => str.replace(/[^0-9]/g, '');
 

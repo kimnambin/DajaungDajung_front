@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemRegister from '../../components/ItemRegister/ItemRegister';
+import ItemRegister from '../../components/items/itemRegister/ItemRegister';
 import { useLocation } from 'react-router-dom';
 
 const ItemsEdit = () => {

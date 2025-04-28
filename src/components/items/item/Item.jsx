@@ -1,7 +1,7 @@
 import React from 'react';
 import './Item.css';
-import sampleImg from '../../assets/sampleImg.svg';
-import { getDaysAgo } from '../../utils/date';
+import sampleImg from '../../../assets/sampleImg.svg';
+import { getDaysAgo } from '../../../utils/date';
 import { useNavigate } from 'react-router-dom';
 
 const Item = ({item}) => {
