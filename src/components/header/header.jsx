@@ -18,7 +18,7 @@ function Header() {
         </form>
         <div className={styles.navItems}>
           <Link to='/' className={styles.chating}>채팅하기</Link>
-          <Link to='/items' className={styles.selling}>판매하기</Link>
+          <Link to='/items/create' className={styles.selling}>판매하기</Link>
           <Link to='/login' className={styles.login}>{login}</Link>
         </div>
       </div>
