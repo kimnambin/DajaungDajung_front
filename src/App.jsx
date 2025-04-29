@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Header from './components/header';
-import Footer from './components/footer';
-import UserInfos from './pages/userInfos';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
+import UserInfos from './pages/UserInfos/userInfos';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import FindId from './pages/FindId/FindId';

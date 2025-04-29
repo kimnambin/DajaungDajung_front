@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
 import './Signup.css';
-// import axios from 'axios'; // 실제 API 연동 시 주석 해제
 
 const Signup = () => {
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
@@ -31,11 +30,9 @@ const Signup = () => {
       console.log('회원가입 요청 준비 완료:', form);
       alert('회원가입이 완료되었습니다');
 
-      // ✅ 로그인 페이지로 이동
+
       navigate('/login');
 
-      // 실제 API 연동 시:
-      // await axios.post('/api/signup', form);
     } catch (error) {
       console.error('회원가입 오류:', error);
       alert('회원가입에 실패했습니다.');

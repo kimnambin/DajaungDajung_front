@@ -1,0 +1,56 @@
+import { use, useState } from 'react';
+
+import styles from './userInfo.module.css';
+import profileImage from '../../assets/default_image.jpg';
+
+export default function UserInfo() {
+  let [nickname, setNickname] = useState('닉네임');
+  let [openDate, setOpenDate] = useState('10');
+  let [sellCount, setSellCount] = useState('1');
+  let [description, setDescription] = useState(
+    `안녕하세요\n살펴보고 가세요\n감사합니다.
+    `
+  )
+
+  return (
+    <div className={styles.userInfo}>
+      <div className={styles.profilebox}>
+        <img className={styles.profileImage} src={profileImage} />
+      </div>
+      <div className={styles.infobox}>
+        <div>
+          <h2 className={styles.nickname}>{nickname}</h2>
+          <div className={styles.listItems}>
+            <p className={styles.option}>상점오픈일</p>
+            <p>{openDate}일 전</p>
+          </div>
+          <div className={styles.listItems}>
+            <p className={styles.option}>상품판매</p>
+            <p>{sellCount} 회</p>
+          </div>
+          <div className={styles.profileDescription}>
+            <p>{description}</p>
+          </div>
+        </div>
+        <div className={styles.extraInfo}>
+          <table>
+            <tbody>
+              <tr>
+                <td className={styles.tTitle}>이름</td>
+                <td className={styles.tContent}>가나다</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>이메일</td>
+                <td className={styles.tContent}>aa123@emil.com</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>전화번호</td>
+                <td className={styles.tContent}>010-1111-2222</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div >
+  )
+}
