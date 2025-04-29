@@ -35,7 +35,7 @@ const ItemRegister = ({ isEdit = false, item = null }) => {
     }
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files?.[0];
         if(file) {
             const imageUrl = URL.createObjectURL(file);
             setPreview(imageUrl);
