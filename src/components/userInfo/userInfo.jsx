@@ -32,6 +32,24 @@ export default function UserInfo() {
             <p>{description}</p>
           </div>
         </div>
+        <div className={styles.extraInfo}>
+          <table>
+            <tbody>
+              <tr>
+                <td className={styles.tTitle}>이름</td>
+                <td className={styles.tContent}>가나다</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>이메일</td>
+                <td className={styles.tContent}>aa123@emil.com</td>
+              </tr>
+              <tr>
+                <td className={styles.tTitle}>전화번호</td>
+                <td className={styles.tContent}>010-1111-2222</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div >
   )

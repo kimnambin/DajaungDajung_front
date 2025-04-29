@@ -1,0 +1,9 @@
+.myPage{
+  display : grid;
+  grid-template:
+    'a a a' 80px
+    'b c c' auto / 1fr 4fr;
+  width : 90%;
+  height : 100%;
+  margin: 0 auto;
+}
