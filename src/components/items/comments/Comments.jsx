@@ -1,9 +1,9 @@
 import React from 'react';
 import './Comments.css';
-import default_profile from '../../../assets/default_profile.svg';
 import delete_btn from '../../../assets/ic_x.svg';
+import { getImgSrc } from '../../../utils/image';
 
-const Comments = () => {
+const Comments = ({ comments }) => {
     return (
         <div className='comments_container'>
             
@@ -15,17 +15,19 @@ const Comments = () => {
             <div className='comment_container'>
                 <div className='comments_title'>
                     <p className='comment_title_txt'>댓글</p>
-                    <p className='comment_title_count'>1개</p>
+                    <p className='comment_title_count'>{comments.length}개</p>
                 </div>
 
-                <div className="comment">
-                    <img src={default_profile} width={50}/>
-                    <div className="comment_txt_container">
-                        <p className='comment_nickname'>user_nickname</p>
-                        <p className='comment_txt'>저 이거 구매하고 싶어요!</p>
+                {comments.map((comment) => {
+                    <div className="comment">
+                        <img src={getImgSrc(comment.img_id)} width={50}/>
+                        <div className="comment_txt_container">
+                            <p className='comment_nickname'>{comment.nickname}</p>
+                            <p className='comment_txt'>{comment.created_at}</p>
+                        </div>
+                        <img src={delete_btn}/>
                     </div>
-                    <img src={delete_btn}/>
-                </div>
+                })}
             </div>
         </div>
     );
