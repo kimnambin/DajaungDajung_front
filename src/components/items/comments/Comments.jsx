@@ -31,9 +31,29 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
             console.log('댓글 추가 에러 : ', error);
         }
     };
+    
+    const deleteComment = async (comment_id) => {
+        try {
+            await axios.delete(`${baseURL}/comments/${comment_id}`, 
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': '1233123',
+                        ...(token && { Authorization: token }),
+                    }
+                }
+            );
+            onCommentAdded();
+        }  catch (error) {
+            console.log('댓글 삭제 에러 : ', error);
+        }
+    }
 
     const handleComment = () => {
         addComment();
+    }
+
+    const handleDeleteComment = (comment_id) => {
+        deleteComment(comment_id);
     }
 
     return (
@@ -61,7 +81,7 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
                             <p className='comment_nickname'>{comment.nickname}</p>
                             <p className='comment_txt'>{comment.contents}</p>
                         </div>
-                        <img src={delete_btn}/>
+                        <img src={delete_btn} onClick={() => handleDeleteComment(comment.id)}/>
                     </div>
                 ))}
             </div>
