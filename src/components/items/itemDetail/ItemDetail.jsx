@@ -15,10 +15,12 @@ const ItemDetail = () => {
     const { id } = useParams();
     const baseURL = import.meta.env.VITE_BASE_URL;
 
+    const token = import.meta.env.VITE_TOKEN;
+
     const [item, setItem] = useState({});
     const [seller, setSeller] = useState({});
     const [isLike, setIsLike] = useState(false);
-    const [isSeller, setIsSeller] = useState(true);
+    const [isSeller, setIsSeller] = useState(false);
     const [comments, setComments] = useState([]);
 
     const handleEdit = (id) => {
@@ -31,12 +33,13 @@ const ItemDetail = () => {
                 const response = await axios.get(`${baseURL}/items/${id}`, {
                     headers: {
                         'ngrok-skip-browser-warning': '1233123',
+                        ...(token && { Authorization: token }),
                     }
                 });
                 setItem(response.data.item);
                 setSeller(response.data.user);
-
-                if (response.data.item.liked === "true") setIsLike(true);
+                setIsLike(response.data.item.liked === 'true');
+                setIsSeller(response.data.item.seller === 'true');
             } catch (error) {
                 console.log('상품 상세 조회 에러 : ', error);
             }
@@ -57,16 +60,28 @@ const ItemDetail = () => {
 
         fetchItemDetailData();
         fetchCommentData();
-    }, []);
+    }, [id, baseURL, token]);
 
     
-    const handleLikeButton = () => {
-        if(isLike) item.like--;
-        else item.like++;
-        setIsLike(!isLike);
-
-        // ✅ 로그인 API 연동 후 좋아요 API 요청 수행
-    }
+    const handleLikeButton = async (item_id) => {
+        try {
+            const headers = {
+                'ngrok-skip-browser-warning': '1233123',
+                ...(token && { Authorization: token }),
+            };
+            console.log('보내는 요청 헤더:', headers);
+    
+            if (isLike) {
+                await axios.delete(`${baseURL}/users/likes/${item_id}`, { headers });
+                setIsLike(false);
+            } else {
+                await axios.post(`${baseURL}/users/likes/${item_id}`, {}, { headers });
+                setIsLike(true);
+            }
+        } catch (error) {
+            console.log('좋아요 처리 에러:', error.response?.data || error.message);
+        }
+    };
 
     return (
         <>
@@ -92,7 +107,7 @@ const ItemDetail = () => {
                 <p className='item_detail_info'>{item.contents}</p>
 
                 <div className="item_detail_btns_container">
-                    <button className='item_detail_btn first_btn' onClick={handleLikeButton}>
+                    <button className='item_detail_btn first_btn' onClick={() => handleLikeButton(item.id)}>
                         <div className='item_detail_like_btn'>
                             <img src={isLike ? likeIcon : unLikeIcon} alt="Like" />
                             <p>좋아요</p>
