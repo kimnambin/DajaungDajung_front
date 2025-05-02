@@ -27,6 +27,19 @@ const ItemDetail = () => {
         navigate(`/items/edit/${id}`, { state: { item, isEdit: true } });
     }
 
+    const fetchCommentData = async () => {
+        try {
+            const response = await axios.get(`${baseURL}/comments/${id}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': '1233123',
+                }
+            });
+            setComments(response.data);
+        }  catch (error) {
+            console.log('댓글 조회 에러 : ', error);
+        }
+    };
+
     useEffect(() => {
         const fetchItemDetailData = async () => {
             try {
@@ -45,19 +58,6 @@ const ItemDetail = () => {
             }
         };
 
-        const fetchCommentData = async () => {
-            try {
-                const response = await axios.get(`${baseURL}/comments/${id}`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                    }
-                });
-                setComments(response.data);
-            }  catch (error) {
-                console.log('댓글 조회 에러 : ', error);
-            }
-        }
-
         fetchItemDetailData();
         fetchCommentData();
     }, [id, baseURL, token]);
@@ -69,7 +69,6 @@ const ItemDetail = () => {
                 'ngrok-skip-browser-warning': '1233123',
                 ...(token && { Authorization: token }),
             };
-            console.log('보내는 요청 헤더:', headers);
     
             if (isLike) {
                 await axios.delete(`${baseURL}/users/likes/${item_id}`, { headers });
@@ -139,7 +138,7 @@ const ItemDetail = () => {
 
         <div className='line' />
 
-        <Comments comments={comments}/>
+        <Comments comments={comments} item_id={id} onCommentAdded={fetchCommentData}/>
         </>
     )
 }
