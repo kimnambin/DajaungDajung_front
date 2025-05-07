@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import './ItemDetail.css';
-import { getDaysAgo } from '../../../utils/date';
-import sampleImg from '../../../assets/sampleImg.svg';
-import unLikeIcon from '../../../assets/ic_unlike.svg';
-import likeIcon from '../../../assets/ic_like.svg';
-import Comments from '../comments/Comments';
 import { useNavigate, useParams } from 'react-router-dom';
+import { authRequest } from '../../../api/axiosInstance.js';
+import { getComments } from '../../../api/commentsApi.js';
+import { getItemDetail } from '../../../api/itemsApi.js';
+import likeIcon from '../../../assets/ic_like.svg';
+import unLikeIcon from '../../../assets/ic_unlike.svg';
+import sampleImg from '../../../assets/sampleImg.svg';
+import { getDaysAgo } from '../../../utils/date';
 import { formatNumber } from '../../../utils/format';
 import { getImgSrc } from '../../../utils/image.js';
-import axios from 'axios';
+import Comments from '../comments/Comments';
+import './ItemDetail.css';
 
 const ItemDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const baseURL = import.meta.env.VITE_BASE_URL;
-
-    const token = import.meta.env.VITE_TOKEN;
 
     const [item, setItem] = useState({});
     const [seller, setSeller] = useState({});
@@ -29,11 +29,7 @@ const ItemDetail = () => {
 
     const fetchCommentData = async () => {
         try {
-            const response = await axios.get(`${baseURL}/comments/${id}`, {
-                headers: {
-                    'ngrok-skip-browser-warning': '1233123',
-                }
-            });
+            const response = await getComments(id);
             setComments(response.data);
         }  catch (error) {
             console.log('댓글 조회 에러 : ', error);
@@ -43,12 +39,7 @@ const ItemDetail = () => {
     useEffect(() => {
         const fetchItemDetailData = async () => {
             try {
-                const response = await axios.get(`${baseURL}/items/${id}`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                        ...(token && { Authorization: token }),
-                    }
-                });
+                const response = await getItemDetail(id);
                 setItem(response.data.item);
                 setSeller(response.data.user);
                 setIsLike(response.data.item.liked === 'true');
@@ -60,23 +51,15 @@ const ItemDetail = () => {
 
         fetchItemDetailData();
         fetchCommentData();
-    }, [id, baseURL, token]);
+    }, [id, baseURL]);
 
     
     const handleLikeButton = async (item_id) => {
         try {
-            const headers = {
-                'ngrok-skip-browser-warning': '1233123',
-                ...(token && { Authorization: token }),
-            };
-    
-            if (isLike) {
-                await axios.delete(`${baseURL}/users/likes/${item_id}`, { headers });
-                setIsLike(false);
-            } else {
-                await axios.post(`${baseURL}/users/likes/${item_id}`, {}, { headers });
-                setIsLike(true);
-            }
+            const method = isLike ? 'delete' : 'post';
+            const url = `/users/likes/${item_id}`;
+            await authRequest({ method, url, navigate });
+            setIsLike(!isLike);
         } catch (error) {
             console.log('좋아요 처리 에러:', error.response?.data || error.message);
         }

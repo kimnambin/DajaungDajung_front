@@ -1,6 +1,7 @@
 .item_container {
     border: 1px solid #f2f2f2;
     border-radius: 5px;
+    width: 220px;
     height: 280px;
     padding-bottom: 4px;
     cursor: pointer;
@@ -19,6 +20,11 @@
 
 .item_title {
     font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .item_price {

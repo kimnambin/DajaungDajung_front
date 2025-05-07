@@ -3,10 +3,11 @@ import './Comments.css';
 import delete_btn from '../../../assets/ic_x.svg';
 import { getImgSrc } from '../../../utils/image';
 import axios from 'axios';
+import { authRequest } from '../../../api/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const Comments = ({ comments, item_id, onCommentAdded }) => {
-    const baseURL = import.meta.env.VITE_BASE_URL;
-    const token = import.meta.env.VITE_TOKEN;
+    const navigate = useNavigate();
 
     const [newComment, setNewComment] = useState("");
     
@@ -14,17 +15,12 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
         if (!newComment.trim()) return;
 
         try {
-            await axios.post(`${baseURL}/comments/${item_id}`, 
-                {
-                    contents: newComment
-                }, 
-                {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                        ...(token && { Authorization: token }),
-                    }
-                }
-            );
+            await authRequest({
+                method: 'post',
+                url: `/comments/${item_id}`,
+                data: { contents: newComment },
+                navigate
+            });
             setNewComment("");
             onCommentAdded();
         }  catch (error) {
@@ -34,17 +30,23 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
     
     const deleteComment = async (comment_id) => {
         try {
-            await axios.delete(`${baseURL}/comments/${comment_id}`, 
-                {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                        ...(token && { Authorization: token }),
-                    }
-                }
-            );
+            const confirmDelete = window.confirm('댓글을 삭제하시겠습니까?');
+            if(!confirmDelete) return;
+            
+            await authRequest({
+                method: 'delete',
+                url: `/comments/${comment_id}`,
+                navigate,
+            });
             onCommentAdded();
         }  catch (error) {
-            console.log('댓글 삭제 에러 : ', error);
+            if (error.response?.status === 403) {
+                alert('본인의 댓글만 삭제할 수 있습니다.');
+            } else if (error.response?.status === 401) {
+                console.log('댓글 삭제 권한 없음');
+            } else {
+                console.error('댓글 삭제 에러:', error);
+            }
         }
     }
 

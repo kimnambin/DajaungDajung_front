@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './ItemsSearch.css';
 import { useLocation } from 'react-router-dom';
-// import data from '../../../dummyData.json';
 import Category from '../../components/items/category/Category';
 import Item from '../../components/items/item/Item';
-import axios from 'axios';
+import { getSearchItems } from '../../api/itemsApi';
+import { getCategories } from '../../api/categoryApi';
+
 
 const ItemsSearch = () => {
     const location = useLocation();
@@ -16,7 +17,6 @@ const ItemsSearch = () => {
     const [items, setItems] = useState([]);
     const [isEmpty, setIsEmpty] = useState(true);
     const [categories, setCategories] = useState([]);
-    const baseURL = import.meta.env.VITE_BASE_URL;
 
     useEffect(() => {
         const params = new URLSearchParams();
@@ -25,11 +25,8 @@ const ItemsSearch = () => {
 
         const fetchItemSearchData = async () => {
             try {
-                const response = await axios.get(`${baseURL}/items?${params.toString()}`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                    }
-                });
+                const response = await getSearchItems(q, category);
+                
                 setItems(response.data);
                 setIsEmpty(response.data.length === 0);
             } catch (error) {
@@ -41,11 +38,7 @@ const ItemsSearch = () => {
 
         const fetchCategoryData = async () => {
             try {
-                const response = await axios.get(`${baseURL}/catagory`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': '1233123',
-                    }
-                });
+                const response = await getCategories();
                 setCategories(response.data);
             } catch (error) {
                 console.log('카테고리 조회 에러 : ', error);
