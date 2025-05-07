@@ -17,9 +17,6 @@ function Header() {
   }, [location]);
 
   const handleLogout = async () => {
-    const confirmed = window.confirm('로그아웃 하시겠습니까?');
-    if (!confirmed) return;
-
     const token = localStorage.getItem('token');
 
     try {
@@ -27,14 +24,15 @@ function Header() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // 서버에서 토큰 인증에 필요
         },
-        credentials: 'include',
+        credentials: 'include', // 쿠키 무효화 함께 진행
       });
     } catch (error) {
       console.error('서버 로그아웃 실패:', error);
     }
 
+    // 클라이언트 상태 초기화
     localStorage.removeItem('token');
     localStorage.removeItem('nickname');
     setNickname('');

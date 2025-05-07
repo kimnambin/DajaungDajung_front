@@ -26,6 +26,7 @@ function App() {
           <Route path="/items/:id" element={<ItemsDetail />} />
           <Route path="/items/edit/:id" element={<ItemsEdit />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/findid" element={<FindId />} />
           <Route path="/resetpwd" element={<ResetPwd />} />
