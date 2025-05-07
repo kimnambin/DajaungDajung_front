@@ -7,7 +7,7 @@ const FindId = () => {
 
   const [form, setForm] = useState({
     name: '',
-    phone: '',
+    contact: '', 
   });
 
   const handleChange = (e) => {
@@ -18,22 +18,32 @@ const FindId = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const sanitizedPhone = form.phone.replace(/[^0-9]/g, '');
+    const sanitizedContact = form.contact.replace(/[^0-9]/g, '');
 
     try {
-
-      console.log('아이디 찾기 요청 준비 완료:', {
-        name: form.name,
-        phone: sanitizedPhone,
+      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/findid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          name: form.name,
+          contact: sanitizedContact,
+        }),
       });
 
-      alert('아이디가 확인되었습니다!');
+      if (!res.ok) {
+        throw new Error('서버 오류 또는 일치하는 정보 없음');
+      }
 
-      navigate('/login');
+      const data = await res.json();
+      alert(`가입된 이메일은 다음과 같습니다:\n\n📧 ${data.email}`);
+      navigate('/signin');
 
     } catch (error) {
       console.error('아이디 찾기 오류:', error);
-      alert('아이디 찾기에 실패했습니다.');
+      alert('일치하는 회원 정보가 없습니다.');
     }
   };
 
@@ -51,8 +61,8 @@ const FindId = () => {
           required
         />
         <input
-          name="phone"
-          value={form.phone}
+          name="contact"
+          value={form.contact}
           onChange={handleChange}
           className="findid-input"
           placeholder="전화번호 (- 없이 숫자만 입력)"

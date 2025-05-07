@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './ResetPwd.css';
-// import axios from 'axios'; // 실제 연동 시 주석 해제
 
 const ResetPwd = () => {
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
@@ -22,19 +22,21 @@ const ResetPwd = () => {
     const sanitizedPhone = form.phone.replace(/[^0-9]/g, '');
 
     try {
-      // 실제 API 요청 예시
-      // const response = await axios.post('/api/reset-password', {
-      //   ...form,
-      //   phone: sanitizedPhone,
-      // });
+      const response = await axios.post(
+        'https://afe5-58-77-32-216.ngrok-free.app/auth/reset',
+        {
+          name: form.name,
+          email: form.email,
+          contact: sanitizedPhone,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-      console.log('비밀번호 초기화 요청 준비 완료:', {
-        ...form,
-        phone: sanitizedPhone,
-      });
+      console.log('응답 결과:', response.data);
 
-      // 🔁 비밀번호 재설정 페이지로 이동
-      navigate('/newpwd');
+      navigate('/newpwd', { state: { email: form.email } });
     } catch (error) {
       console.error('비밀번호 초기화 오류:', error);
       alert('비밀번호 초기화에 실패했습니다.');
@@ -72,7 +74,9 @@ const ResetPwd = () => {
           required
         />
         <div className="resetpwd-divider" />
-        <button type="submit" className="button button--primary">비밀번호 초기화</button>
+        <button type="submit" className="button button--primary">
+          비밀번호 초기화
+        </button>
       </form>
     </div>
   );

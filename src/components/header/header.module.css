@@ -54,3 +54,47 @@
   cursor: pointer;
 }
 /* 돋보기 모양 absolute로 세로 가운데 정렬하기 */
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.nickname {
+  font-weight: bold;
+  padding: 4px 8px;
+  color: #EC7FA9;
+}
+
+.dropdown {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #FFB8E0;
+  border-radius: 10px; 
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333;
+  text-decoration: none;
+  background-color: white;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background-color: #ffe5f0; 
+}
+
+

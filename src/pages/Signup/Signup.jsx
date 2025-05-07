@@ -27,11 +27,30 @@ const Signup = () => {
     }
 
     try {
-      console.log('회원가입 요청 준비 완료:', form);
+      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          nickname: form.nickname,
+          email: form.email,
+          contact: form.phone, 
+          password: form.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error('서버 응답 에러 메시지:', data);
+        throw new Error(data.message || '서버 응답 실패');
+      }
+
+      console.log('회원가입 성공:', data);
       alert('회원가입이 완료되었습니다');
-
-
-      navigate('/login');
+      navigate('/DajungDajung');
 
     } catch (error) {
       console.error('회원가입 오류:', error);

@@ -6,8 +6,7 @@ import ItemsCreate from './pages/items/ItemsCreate';
 import ItemsSearch from './pages/items/ItemsSearch';
 import ItemsDetail from './pages/items/ItemsDetail';
 import ItemsEdit from './pages/items/ItemsEdit';
-import UserInfos from './pages/UserInfos/userInfos';
-import Login from './pages/Login/Login';
+import Signin from './pages/SignIn/signin';
 import Signup from './pages/Signup/Signup';
 import FindId from './pages/FindId/FindId';
 import ResetPwd from './pages/ResetPwd/ResetPwd';
@@ -18,15 +17,13 @@ function App() {
   return (
     <div className="app-wrapper">
       <Header />
-
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<UserInfos />} />
           <Route path="/items/create" element={<ItemsCreate />} />
           <Route path="/items" element={<ItemsSearch />}/>
           <Route path="/items/:id" element={<ItemsDetail />} />
           <Route path="/items/edit/:id" element={<ItemsEdit />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/findid" element={<FindId />} />
           <Route path="/resetpwd" element={<ResetPwd />} />
@@ -34,7 +31,6 @@ function App() {
           <Route path="/dajungdajung" element={<DajungDajung />} />
         </Routes>
       </main>
-
       <Footer />
     </div>
   );
