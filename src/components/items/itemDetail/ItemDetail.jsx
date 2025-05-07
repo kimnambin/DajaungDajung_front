@@ -60,6 +60,11 @@ const ItemDetail = () => {
             const url = `/users/likes/${item_id}`;
             await authRequest({ method, url, navigate });
             setIsLike(!isLike);
+
+            setItem((prev) => ({
+                ...prev,
+                like: isLike ? prev.like - 1 : prev.like + 1,
+            }));
         } catch (error) {
             console.log('좋아요 처리 에러:', error.response?.data || error.message);
         }
