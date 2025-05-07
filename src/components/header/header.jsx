@@ -7,6 +7,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 function Header() {
   const [nickname, setNickname] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +17,16 @@ function Header() {
     setShowDropdown(false);
   }, [location]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchInput.trim() === '') return;
+    navigate(`/items?q=${encodeURIComponent(searchInput.trim())}`);
+  };
+
   const handleLogout = async () => {
+    const confirmLogout = window.confirm('로그아웃 하시겠습니까?');
+    if (!confirmLogout) return;
+
     const token = localStorage.getItem('token');
 
     try {
@@ -24,15 +34,14 @@ function Header() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // 서버에서 토큰 인증에 필요
+          Authorization: `Bearer ${token}`,
         },
-        credentials: 'include', // 쿠키 무효화 함께 진행
+        credentials: 'include',
       });
     } catch (error) {
       console.error('서버 로그아웃 실패:', error);
     }
 
-    // 클라이언트 상태 초기화
     localStorage.removeItem('token');
     localStorage.removeItem('nickname');
     setNickname('');
@@ -46,9 +55,18 @@ function Header() {
           <img src={Logo} className={styles.logo} alt="로고" />
         </Link>
 
-        <form className={styles.searchBox} method='post'>
-          <input placeholder='검색어를 입력하세요' />
-          <img className={styles.searchIcon} src={searchIcon} alt="검색" />
+        <form className={styles.searchBox} onSubmit={handleSearch}>
+          <input 
+            placeholder='검색어를 입력하세요'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <img 
+            className={styles.searchIcon} 
+            src={searchIcon} 
+            alt='검색' 
+            onClick={handleSearch} 
+          />
         </form>
 
         <div className={styles.navItems}>
