@@ -1,28 +1,44 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './ItemRegister.css'
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authRequest } from '../../../api/axiosInstance';
+import { getCategories } from '../../../api/categoryApi';
 import SampleImg from '../../../assets/sampleImg.svg';
 import { formatNumber } from '../../../utils/format';
+import './ItemRegister.css';
 
 const onlyNumber = (str) => str.replace(/[^0-9]/g, '');
 
 const ItemRegister = ({ isEdit = false, item = null }) => {
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
 
     const [preview, setPreview] = useState(SampleImg);
     const [form, setForm] = useState({
         title: '',
         category: '',
         price: '',
-        description: ''
+        contents: ''
     });
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await getCategories();
+                setCategories(response.data);
+            } catch (error) {
+                console.log('카테고리 조회 에러 : ', error);
+            }
+        };
+
+        fetchCategories();
+
         if (isEdit && item) {
           setForm({
             title: item.title || '',
-            category: item.category || '',
+            category: item.category_id || '',
             price: item.price ? formatNumber(item.price) : '',
-            description: item.description || ''
+            contents: item.contents || ''
           });
           if (item.imageUrl) {
             setPreview(item.imageUrl);
@@ -59,24 +75,45 @@ const ItemRegister = ({ isEdit = false, item = null }) => {
         }
     };
     
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
     const cleanPrice = Number(onlyNumber(form.price));
 
     const dataToSubmit = {
         ...form,
         price: cleanPrice,
+        img_id: 1, // ✅ 이미지 업로드 구현 후 수정 필요 
     };
 
     if (isEdit) {
-        console.log('수정 요청', dataToSubmit);
-        // update API 호출
+        try {
+            console.log(dataToSubmit);
+            await authRequest({
+                method: 'put',
+                url: `/items/${item.id}`,
+                data: dataToSubmit,
+                navigate,
+            });            
+            alert('상품이 수정되었습니다!');
+            navigate(`/items/${item.id}`);
+        } catch (error) {
+            console.log('상품 수정 오류 : ', error);
+        }
     } else {
-        console.log('등록 요청', dataToSubmit);
-        // create API 호출
+        try {
+            console.log(dataToSubmit);
+            const response = await authRequest({
+                method: 'post',
+                url: `/items`,
+                data: dataToSubmit,
+                navigate,
+            });            
+            alert('상품이 등록되었습니다!');
+            navigate(`/items/${response.insertId}`);
+        } catch (error) {
+            console.log('상품 등록 오류 : ', error);
+        }
     }
     };
-
-    console.log(item);
 
     return (
         <div className='item_create_container'>
@@ -108,13 +145,19 @@ const ItemRegister = ({ isEdit = false, item = null }) => {
                     value={form.title}
                     onChange={handleChange}
                 />
-                <input 
-                    className='item_create_input' 
+                <select 
+                    className='item_create_select'
                     name='category'
-                    placeholder='카테고리'
                     value={form.category}
                     onChange={handleChange}
-                />
+                >
+                    <option value="">카테고리를 선택하세요</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.category}
+                        </option>
+                    ))}
+                </select>
                 <input 
                     className='item_create_input' 
                     name='price'
@@ -124,9 +167,9 @@ const ItemRegister = ({ isEdit = false, item = null }) => {
                 />
                 <textarea 
                     className='item_create_input'
-                    name='description'
+                    name='contents'
                     placeholder='설명'
-                    value={form.description}
+                    value={form.contents}
                     onChange={handleChange}
                     style={{
                         height: '200px', 

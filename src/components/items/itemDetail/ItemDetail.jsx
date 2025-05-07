@@ -11,11 +11,11 @@ import { formatNumber } from '../../../utils/format';
 import { getImgSrc } from '../../../utils/image.js';
 import Comments from '../comments/Comments';
 import './ItemDetail.css';
+import { getCookie } from '../../../api/cookie.js';
 
 const ItemDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const baseURL = import.meta.env.VITE_BASE_URL;
 
     const [item, setItem] = useState({});
     const [seller, setSeller] = useState({});
@@ -40,10 +40,12 @@ const ItemDetail = () => {
         const fetchItemDetailData = async () => {
             try {
                 const response = await getItemDetail(id);
+                console.log(response.data);
                 setItem(response.data.item);
                 setSeller(response.data.user);
                 setIsLike(response.data.item.liked === 'true');
-                setIsSeller(response.data.item.seller === 'true');
+                // setIsSeller(response.data.item.seller === 'true');
+                setIsSeller(true);
             } catch (error) {
                 console.log('상품 상세 조회 에러 : ', error);
             }
@@ -51,7 +53,7 @@ const ItemDetail = () => {
 
         fetchItemDetailData();
         fetchCommentData();
-    }, [id, baseURL]);
+    }, [id]);
 
     
     const handleLikeButton = async (item_id) => {
@@ -77,7 +79,7 @@ const ItemDetail = () => {
                         <img src={getImgSrc(seller.image)} alt="Item" width={64} style={{borderRadius: `100px`}}/>
                         <p>{seller.seller}</p>
                     </div>
-                    <button className='shop_btn'>상점 보러가기</button>
+                    <button className='shop_btn' onClick={() => navigate(`/store/${seller.seller}`)}>상점 보러가기</button>
                 </div>
             </div>
 
