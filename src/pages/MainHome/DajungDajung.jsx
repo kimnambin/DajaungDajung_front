@@ -8,6 +8,7 @@ import 'dayjs/locale/ko';
 import './DajungDajung.css';
 import banner1 from "../../assets/banner1.png";
 import banner2 from "../../assets/banner2.png";
+import { getImgSrc } from '../../utils/image';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -92,7 +93,7 @@ const DajungDajung = () => {
                 className="product-card-link"
               >
                 <div className="product-card">
-                  <img className="card-image" src={item.img} alt="상품 이미지" />
+                  <img className="card-image" src={getImgSrc(item.img)} alt="상품 이미지" />
                   <div className="card-info">
                     <div className="card-name">{item.name}</div>
                     <div className="card-bottom">

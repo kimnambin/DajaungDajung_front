@@ -27,8 +27,6 @@ function Header() {
     const confirmLogout = window.confirm('로그아웃 하시겠습니까?');
     if (!confirmLogout) return;
 
-    const token = localStorage.getItem('token');
-
     try {
       await fetch('https://b292-222-232-138-33.ngrok-free.app/auth/logout', {
         method: 'POST',
@@ -42,7 +40,6 @@ function Header() {
       console.error('서버 로그아웃 실패:', error);
     }
 
-    localStorage.removeItem('token');
     localStorage.removeItem('nickname');
     setNickname('');
     navigate('/dajungdajung');
@@ -56,21 +53,21 @@ function Header() {
         </Link>
 
         <form className={styles.searchBox} onSubmit={handleSearch}>
-          <input 
+          <input
             placeholder='검색어를 입력하세요'
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <img 
-            className={styles.searchIcon} 
-            src={searchIcon} 
-            alt='검색' 
-            onClick={handleSearch} 
+          <img
+            className={styles.searchIcon}
+            src={searchIcon}
+            alt='검색'
+            onClick={handleSearch}
           />
         </form>
 
         <div className={styles.navItems}>
-          <Link to='/' className={styles.chating}>채팅하기</Link>
+          <Link to='/users/mypage' className={styles.chating}>마이페이지</Link>
           <Link to='/items/create' className={styles.selling}>판매하기</Link>
 
           {nickname ? (
@@ -82,7 +79,7 @@ function Header() {
               <span className={styles.nickname}>{nickname}</span>
               {showDropdown && (
                 <div className={styles.dropdown}>
-                  <Link to='/mypage' className={styles.dropdownItem}>마이페이지</Link>
+                  <Link to='/users/mypage' className={styles.dropdownItem}>마이페이지</Link>
                   <button className={styles.dropdownItem} onClick={handleLogout}>로그아웃</button>
                 </div>
               )}
