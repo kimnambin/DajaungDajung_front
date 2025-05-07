@@ -1,36 +1,38 @@
 import React from 'react';
 import './Category.css';
-import data from '../../../../dummyData.json';
 import selectedIcon from '../../../assets/ic_selected.svg';
 import unselectedIcon from '../../../assets/ic_unselected.svg';
 import { useNavigate } from 'react-router-dom';
 
-const Category = ({selectedCategory, keyword}) => {
+const Category = ({selectedCategory, keyword, categories}) => {
     const navigate = useNavigate();
 
-    const handleClickCategory = (categoryName) => {
-        navigate(`/items?q=${keyword}&category=${categoryName}`);
+    const handleClickCategory = (categoryId, categoryName) => {
+        if (categoryName === '전체') navigate(`/items?q=${keyword}`);
+        else navigate(`/items?q=${keyword}&category=${categoryId}`);
     }
+
+    const allCategories = [{ id: 0, category: '전체' }, ...categories];
 
     return (
         <div className='category_container'>
             <div className='category_line'></div>
             <h3>카테고리</h3>
-            {data.categories.map(category => (
+            {allCategories.map(category => (
                 <div 
                     className='category' 
                     key={category.id}
-                    onClick={() => handleClickCategory(category.name)}
+                    onClick={() => handleClickCategory(category.id, category.category)}
                 >
-                    {selectedCategory === category.name ? (
+                    {Number(selectedCategory) === category.id ? (
                         <>
                             <img src={selectedIcon} alt="selected" />
-                            <p>{category.name}</p>
+                            <p>{category.category}</p>
                         </>
                     ) : (
                         <>
                             <img src={unselectedIcon} alt="unselected" />
-                            <p>{category.name}</p>
+                            <p>{category.category}</p>
                         </>
                     )}
                 </div>

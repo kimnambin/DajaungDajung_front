@@ -15,4 +15,12 @@
     column-gap: 32px;
     row-gap: 32px;
     margin: 20px;
-  }
+}
+
+.search_empty {
+    width: 65vw;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

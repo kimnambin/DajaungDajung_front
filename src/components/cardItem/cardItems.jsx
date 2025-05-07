@@ -1,16 +1,12 @@
 import styles from './cardItems.module.css'
 import defaultImage from '../../assets/default_item_image.jpg'
-<<<<<<< HEAD
-=======
 import { useNavigate } from 'react-router-dom'
-
 
 export default function CardItems({ id, title, price, date }) {
   const navigate = useNavigate();
   const navigateToEachItem = (num) => {
     navigate(`/items/${num}`)
   }
->>>>>>> c3fd6a58736156c21e3becd25da735f0b833db89
 
   return (
     <>
