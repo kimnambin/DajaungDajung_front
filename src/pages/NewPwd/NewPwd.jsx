@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import './NewPwd.css';
-
 
 const NewPwd = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email || '';
 
   const [form, setForm] = useState({
     newPassword: '',
@@ -24,12 +26,28 @@ const NewPwd = () => {
       return;
     }
 
+    if (!email) {
+      alert('이메일 정보가 유실되었습니다. 처음부터 다시 시도해주세요.');
+      navigate('/resetpwd');
+      return;
+    }
+
     try {
-      console.log('비밀번호 재설정 요청:', form);
+      const response = await axios.put(
+        'https://afe5-58-77-32-216.ngrok-free.app/auth/reset',
+        {
+          email,
+          password: form.newPassword,
+          passwordConfirm: form.confirmPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log('비밀번호 변경 성공:', response.data);
       alert('비밀번호가 성공적으로 변경되었습니다.');
-
-      navigate('/login');
-
+      navigate('/signin');
     } catch (error) {
       console.error('비밀번호 변경 오류:', error);
       alert('비밀번호 변경에 실패했습니다.');
