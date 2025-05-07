@@ -11,3 +11,5 @@ export const getSearchItems = (query, category) => {
 export const getItemDetail = (id) => axiosInstance(`/items/${id}`);
 
 export const postItem = (credentials) => axiosInstance.post(`/items`, credentials);
+
+export const deleteItem = (id) => axiosInstance.delete(`/items/${id}`);

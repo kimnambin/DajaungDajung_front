@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { authRequest } from '../../../api/axiosInstance.js';
 import { getComments } from '../../../api/commentsApi.js';
-import { getItemDetail } from '../../../api/itemsApi.js';
+import { deleteItem, getItemDetail } from '../../../api/itemsApi.js';
 import likeIcon from '../../../assets/ic_like.svg';
 import unLikeIcon from '../../../assets/ic_unlike.svg';
 import sampleImg from '../../../assets/sampleImg.svg';
@@ -11,7 +11,6 @@ import { formatNumber } from '../../../utils/format';
 import { getImgSrc } from '../../../utils/image.js';
 import Comments from '../comments/Comments';
 import './ItemDetail.css';
-import { getCookie } from '../../../api/cookie.js';
 
 const ItemDetail = () => {
     const navigate = useNavigate();
@@ -44,8 +43,7 @@ const ItemDetail = () => {
                 setItem(response.data.item);
                 setSeller(response.data.user);
                 setIsLike(response.data.item.liked === 'true');
-                // setIsSeller(response.data.item.seller === 'true');
-                setIsSeller(true);
+                setIsSeller(response.data.item.seller === 'true');
             } catch (error) {
                 console.log('상품 상세 조회 에러 : ', error);
             }
@@ -67,6 +65,18 @@ const ItemDetail = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        try { 
+            const doDelete = window.confirm('상품을 삭제하시겠습니까?');
+            if (doDelete) {
+                await deleteItem(id);
+                navigate('/dajungdajung');
+            }
+        } catch (error) {
+            console.log('상품 삭제 에러 : ', error);
+        }
+    }
+
     return (
         <>
         <div className='item_detail_container'>
@@ -79,7 +89,7 @@ const ItemDetail = () => {
                         <img src={getImgSrc(seller.image)} alt="Item" width={64} style={{borderRadius: `100px`}}/>
                         <p>{seller.seller}</p>
                     </div>
-                    <button className='shop_btn' onClick={() => navigate(`/store/${seller.seller}`)}>상점 보러가기</button>
+                    <button className='shop_btn' onClick={() => navigate(`/store/${seller.id}`)}>상점 보러가기</button>
                 </div>
             </div>
 
@@ -109,7 +119,7 @@ const ItemDetail = () => {
                     }
                     
                     {isSeller ? 
-                        <button className='item_detail_btn last_btn'>
+                        <button className='item_detail_btn last_btn' onClick={() => handleDelete(id)}>
                         삭제하기
                         </button>
                      : 
