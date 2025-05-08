@@ -25,7 +25,7 @@ const Login = () => {
     }
 
     try {
-      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/signin', {
+      const res = await fetch('https://b547-222-232-138-33.ngrok-free.app/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

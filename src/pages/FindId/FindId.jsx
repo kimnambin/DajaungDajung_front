@@ -21,7 +21,7 @@ const FindId = () => {
     const sanitizedContact = form.contact.replace(/[^0-9]/g, '');
 
     try {
-      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/findid', {
+      const res = await fetch('https://b547-222-232-138-33.ngrok-free.app/auth/findid', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

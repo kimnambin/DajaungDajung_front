@@ -71,7 +71,7 @@ const DajungDajung = () => {
   return (
     <div className="dajung-container">
       <div className="banner-box">
-        <Link to="/login">
+        <Link to="/signin">
           <img
             src={bannerImages[bannerIndex]}
             alt="배너 이미지"

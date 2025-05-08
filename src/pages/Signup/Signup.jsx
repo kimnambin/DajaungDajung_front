@@ -50,7 +50,7 @@ const Signup = () => {
 
       console.log('회원가입 성공:', data);
       alert('회원가입이 완료되었습니다');
-      navigate('/DajungDajung');
+      navigate('/signin');
 
     } catch (error) {
       console.error('회원가입 오류:', error);

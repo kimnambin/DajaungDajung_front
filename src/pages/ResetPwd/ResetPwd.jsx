@@ -23,7 +23,7 @@ const ResetPwd = () => {
 
     try {
       const response = await axios.post(
-        'https://afe5-58-77-32-216.ngrok-free.app/auth/reset',
+        'https://b547-222-232-138-33.ngrok-free.app/auth/reset',
         {
           name: form.name,
           email: form.email,
