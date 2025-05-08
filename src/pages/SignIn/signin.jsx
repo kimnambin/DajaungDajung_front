@@ -44,7 +44,7 @@ const Login = () => {
 
       console.log('로그인 성공:', data);
       localStorage.setItem('token', data.token);
-      localStorage.setItem('nickname', data.nickname); 
+      localStorage.setItem('nickname', data.nickname);
 
       alert('로그인 성공! 메인페이지로 이동합니다.');
       navigate('/dajungdajung');

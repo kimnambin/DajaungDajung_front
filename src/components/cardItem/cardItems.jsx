@@ -1,26 +1,24 @@
+import { getDaysAgo } from '../../utils/date';
+import { getImgSrc } from '../../utils/image';
 import styles from './cardItems.module.css'
-import defaultImage from '../../assets/default_item_image.jpg'
 import { useNavigate } from 'react-router-dom'
 
-export default function CardItems({ id, title, price, date }) {
-  const navigate = useNavigate();
-  const navigateToEachItem = (num) => {
-    navigate(`/items/${num}`)
-  }
 
+export default function CardItems({ item }) {
+  const navigate = useNavigate();
   return (
     <>
-      <div className={styles.card} onClick={() => navigateToEachItem(id)}>
+      <div className={styles.card} onClick={() => navigate(`/items/${item.id}`)}>
         <div className={styles.cardImage}>
-          <img src={defaultImage} />
+          <img src={getImgSrc(item.img_id)} />
         </div>
         <div className={styles.cardTitle}>
-          <p>{title}</p>
+          <p>{item.title}</p>
         </div>
         <div className={styles.cardInfos}>
           <div>
-            <p className={styles.price}>{price}원</p>
-            <p className={styles.date}>{date}일 전</p>
+            <p className={styles.price}>{item.price.toLocaleString()}원</p>
+            <p className={styles.date}>{getDaysAgo(item.created_at)}</p>
           </div>
         </div>
       </div >

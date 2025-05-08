@@ -8,6 +8,7 @@ import 'dayjs/locale/ko';
 import './DajungDajung.css';
 import banner1 from "../../assets/banner1.png";
 import banner2 from "../../assets/banner2.png";
+import { getImgSrc } from '../../utils/image';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -40,7 +41,7 @@ const DajungDajung = () => {
 
   const fetchProductList = async () => {
     try {
-      const response = await axios.get('https://afe5-58-77-32-216.ngrok-free.app/', {
+      const response = await axios.get('https://b547-222-232-138-33.ngrok-free.app/', {
         headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': '69420',
@@ -57,7 +58,7 @@ const DajungDajung = () => {
         name: item.title,
         price: item.price,
         time: dayjs(item.created_at).fromNow(),
-        img: '/img/sample.png', // 추후 실제 이미지로 교체
+        img: item.img_id, // 추후 실제 이미지로 교체
       }));
 
       setProducts(formattedData);
@@ -92,7 +93,7 @@ const DajungDajung = () => {
                 className="product-card-link"
               >
                 <div className="product-card">
-                  <img className="card-image" src={item.img} alt="상품 이미지" />
+                  <img className="card-image" src={getImgSrc(item.img)} alt="상품 이미지" />
                   <div className="card-info">
                     <div className="card-name">{item.name}</div>
                     <div className="card-bottom">

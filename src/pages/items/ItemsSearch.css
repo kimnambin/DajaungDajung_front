@@ -7,14 +7,23 @@
 .search_container {
     display: flex;
     gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.container h1 {
+    font-size: 32px;
+    font-weight: bold;
 }
 
 .items_container {
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     column-gap: 32px;
     row-gap: 32px;
     margin: 20px;
+    box-sizing: border-box;
 }
 
 .search_empty {
