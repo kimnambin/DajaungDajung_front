@@ -3,7 +3,7 @@
   grid-template:
     'a a a' 80px
     'b c c' auto / 1fr 4fr;
-  width : 90%;
+  width : 80vw;
   height : 100%;
   margin: 0 auto;
 }

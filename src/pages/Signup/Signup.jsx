@@ -27,7 +27,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/signup', {
+      const res = await fetch('https://b547-222-232-138-33.ngrok-free.app/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const Signup = () => {
           name: form.name,
           nickname: form.nickname,
           email: form.email,
-          contact: form.phone, 
+          contact: form.phone,
           password: form.password,
         }),
       });

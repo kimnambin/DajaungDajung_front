@@ -3,11 +3,11 @@
 }
 
 .category_line {
-    width: "100%";
-    text-align: "center";
-    border-bottom: 1.1px solid #FEDDF0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid #FEDDF0;
     line-height: 1px;
-    margin: "20px 0";
+    margin: 20px 0
 }
 
 .category {
@@ -15,4 +15,15 @@
     margin-bottom: 16px;
     gap: 8px;
     cursor: pointer;
+}
+
+.category_container h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.category p {
+    font-size: 16px;
+    font-weight: 400;
 }
