@@ -36,7 +36,7 @@ function App() {
           <Route path="/findid" element={<FindId />} />
           <Route path="/resetpwd" element={<ResetPwd />} />
           <Route path="/newpwd" element={<NewPwd />} />
-          <Route path="/dajungdajung" element={<DajungDajung />} />
+          <Route path="/" element={<DajungDajung />} />
           <Route path='/users' element={<MyPage />}>
             <Route path='mypage' element={<UserInfo />} />
             <Route path='mypage/update' element={<UpdateInfo />} />

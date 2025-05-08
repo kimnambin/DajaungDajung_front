@@ -3,6 +3,7 @@ import searchIcon from '../../assets/searchIcon.png';
 import { useEffect, useState } from 'react';
 import styles from './header.module.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axiosInstance from '../../api/axiosInstance';
 
 function Header() {
   const [nickname, setNickname] = useState('');
@@ -21,34 +22,28 @@ function Header() {
     e.preventDefault();
     if (searchInput.trim() === '') return;
     navigate(`/items?q=${encodeURIComponent(searchInput.trim())}`);
+    setSearchInput('')
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     const confirmLogout = window.confirm('로그아웃 하시겠습니까?');
     if (!confirmLogout) return;
 
-    try {
-      await fetch('https://b292-222-232-138-33.ngrok-free.app/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: 'include',
-      });
-    } catch (error) {
-      console.error('서버 로그아웃 실패:', error);
-    }
-
-    localStorage.removeItem('nickname');
-    setNickname('');
-    navigate('/dajungdajung');
+    axiosInstance.delete('/auth/logout').then((res) => {
+      localStorage.removeItem('nickname');
+      setNickname('');
+      navigate('/');
+      console.log('로그아웃 완료')
+    }).catch(err => {
+      console.log(err);
+      alert('로그아웃을 실패하였습니다.\n다시 시도해주세요.')
+    })
   };
 
   return (
     <nav>
       <div className={styles.container}>
-        <Link to='/dajungdajung' className={styles.logo}>
+        <Link to='/' className={styles.logo}>
           <img src={Logo} className={styles.logo} alt="로고" />
         </Link>
 
@@ -67,14 +62,13 @@ function Header() {
         </form>
 
         <div className={styles.navItems}>
-          <Link to='/users/mypage' className={styles.chating}>마이페이지</Link>
+          <Link to='#' className={styles.chating}>채팅하기</Link>
           <Link to='/items/create' className={styles.selling}>판매하기</Link>
 
           {nickname ? (
             <div
               className={styles.dropdownWrapper}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
+              onClick={() => setShowDropdown(!showDropdown)}
             >
               <span className={styles.nickname}>{nickname}</span>
               {showDropdown && (

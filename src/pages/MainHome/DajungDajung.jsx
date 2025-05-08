@@ -14,7 +14,7 @@ dayjs.extend(relativeTime);
 dayjs.locale('ko');
 
 const bannerImages = [banner1, banner2];
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 12;
 
 const DajungDajung = () => {
   const [products, setProducts] = useState([]);
@@ -71,7 +71,7 @@ const DajungDajung = () => {
   return (
     <div className="dajung-container">
       <div className="banner-box">
-        <Link to="/login">
+        <Link to="/signin">
           <img
             src={bannerImages[bannerIndex]}
             alt="배너 이미지"

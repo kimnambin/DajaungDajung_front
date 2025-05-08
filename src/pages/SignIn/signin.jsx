@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './signin.css';
+import axiosInstance from '../../api/axiosInstance';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,34 +25,17 @@ const Login = () => {
       return;
     }
 
-    try {
-      const res = await fetch('https://afe5-58-77-32-216.ngrok-free.app/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error('로그인 실패 응답:', data);
-        alert('이메일 또는 비밀번호가 잘못되었습니다.');
-        return;
-      }
-
-      console.log('로그인 성공:', data);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('nickname', data.nickname);
-
+    axiosInstance.post('/auth/signin', {
+      email,
+      password
+    }).then((res) => {
+      localStorage.setItem('nickname', res.data[0].nickname);
       alert('로그인 성공! 메인페이지로 이동합니다.');
-      navigate('/dajungdajung');
-    } catch (error) {
-      console.error('로그인 요청 중 오류가 발생했습니다:', error);
+      navigate('/');
+    }).catch(err => {
+      console.error('로그인 요청 중 오류가 발생했습니다:', err);
       alert('로그인에 실패했습니다. 다시 시도해주세요.');
-    }
+    })
   };
 
   return (

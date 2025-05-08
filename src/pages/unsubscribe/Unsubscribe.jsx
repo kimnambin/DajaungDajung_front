@@ -11,7 +11,8 @@ export default function Unsubscribe() {
       axiosInstance.delete('/users/mypage')
         .then((response) => {
           alert('탈퇴 처리 되었습니다.\n 이용해주셔서 감사합니다.');
-          navigate('/dajungdajung');
+          navigate('/');
+          localStorage.removeItem('nickname');
         }).catch(err => {
           alert('죄송합니다. 나중에 다시 시도해주세요')
         })

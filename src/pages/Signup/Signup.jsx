@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
+import axiosInstance from '../../api/axiosInstance';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -26,36 +27,19 @@ const Signup = () => {
       return;
     }
 
-    try {
-      const res = await fetch('https://b547-222-232-138-33.ngrok-free.app/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: form.name,
-          nickname: form.nickname,
-          email: form.email,
-          contact: form.phone,
-          password: form.password,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error('서버 응답 에러 메시지:', data);
-        throw new Error(data.message || '서버 응답 실패');
-      }
-
-      console.log('회원가입 성공:', data);
+    axiosInstance.post('/auth/signup', {
+      name: form.name,
+      nickname: form.nickname,
+      email: form.email,
+      contact: form.phone,
+      password: form.password,
+    }).then((res) => {
       alert('회원가입이 완료되었습니다');
-      navigate('/DajungDajung');
-
-    } catch (error) {
-      console.error('회원가입 오류:', error);
-      alert('회원가입에 실패했습니다.');
-    }
+      navigate('/signin');
+    }).catch(err => {
+      console.error('회원가입 오류:', err);
+      alert('이메일 혹은 전화번호가 중복됩니다.');
+    })
   };
 
   return (
