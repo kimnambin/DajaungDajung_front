@@ -37,16 +37,16 @@ export default function MyPage() {
           if (err && err.response) {
             if (err.response.status === 401) {
               alert('접근권한이 없습니다.\n로그인을 해주세요');
-              navigate('/login');
+              navigate('/signin');
             } else if (err.response.status === 404) {
               return;
             } else {
               alert('잠시 후 다시 시도해주세요');
-              navigate('/dajungdajung');
+              navigate('/');
             }
           } else {
             alert('잠시 후 다시 시도해주세요');
-            navigate('/dajungdajung');
+            navigate('/');
           }
         })
     }
@@ -57,16 +57,16 @@ export default function MyPage() {
         if (err && err.response) {
           if (err.response.status === 401) {
             alert('접근권한이 없습니다.\n로그인을 해주세요');
-            navigate('/login');
+            navigate('/signin');
           } else if (err.response.status === 404) {
             return;
           } else {
             alert('잠시 후 다시 시도해주세요');
-            navigate('/dajungdajung');
+            navigate('/');
           }
         } else {
           alert('잠시 후 다시 시도해주세요');
-          navigate('/dajungdajung');
+          navigate('/');
         }
       })
     }
@@ -77,16 +77,16 @@ export default function MyPage() {
         if (err && err.response) {
           if (err.response.status === 401) {
             alert('접근권한이 없습니다.\n로그인을 해주세요');
-            navigate('/login');
+            navigate('/signin');
           } else if (err.response.status === 404) {
             return;
           } else {
             alert('잠시 후 다시 시도해주세요');
-            navigate('/dajungdajung');
+            navigate('/');
           }
         } else {
           alert('잠시 후 다시 시도해주세요');
-          navigate('/dajungdajung');
+          navigate('/');
         }
       })
     }

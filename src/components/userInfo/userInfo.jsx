@@ -41,7 +41,7 @@ export default function UserInfo({ userData }) {
               </tr>
               <tr>
                 <td className={styles.tTitle}>전화번호</td>
-                <td className={styles.tContent}>{finalUserData?.contact}</td>
+                <td className={styles.tContent}>{finalUserData?.contact.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}</td>
               </tr>
             </tbody>
           </table>

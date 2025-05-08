@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FindId.css';
+import axiosInstance from '../../api/axiosInstance';
 
 const FindId = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
-    contact: '', 
+    contact: '',
   });
 
   const handleChange = (e) => {
@@ -18,33 +19,18 @@ const FindId = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const sanitizedContact = form.contact.replace(/[^0-9]/g, '');
+    const sanitizedContact = form.contact
 
-    try {
-      const res = await fetch('https://b547-222-232-138-33.ngrok-free.app/auth/findid', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          name: form.name,
-          contact: sanitizedContact,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error('서버 오류 또는 일치하는 정보 없음');
-      }
-
-      const data = await res.json();
-      alert(`가입된 이메일은 다음과 같습니다:\n\n📧 ${data.email}`);
+    axiosInstance.post('/auth/findid', {
+      name: form.name,
+      contact: sanitizedContact
+    }).then((res) => {
+      alert(`가입된 이메일은 다음과 같습니다:\n\n📧 ${res.data.email}`);
       navigate('/signin');
-
-    } catch (error) {
-      console.error('아이디 찾기 오류:', error);
+    }).catch(err => {
+      console.error('아이디 찾기 오류:', err);
       alert('일치하는 회원 정보가 없습니다.');
-    }
+    })
   };
 
   return (

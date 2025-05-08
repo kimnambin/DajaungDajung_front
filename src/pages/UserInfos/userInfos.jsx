@@ -21,7 +21,7 @@ export default function UserInfos() {
         if (err && err.response) {
           if (err.response.status === 404) {
             alert('존재하지 않는 사용자입니다.\n메인페이지로 이동합니다.');
-            navigate('/dajungdajung');
+            navigate('/');
           }
         }
       })

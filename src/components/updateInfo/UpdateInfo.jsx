@@ -39,6 +39,11 @@ export default function UpdateInfo() {
 
   const updateSubmit = (data) => {
     const { checkPassword, ...submitData } = data
+    if (submitData.contact) {
+      submitData.contact = submitData.contact.replace(/-/g, '');
+    }
+
+    console.log(submitData)
     axiosInstance.put('/users/mypage', submitData)
       .then((response) => {
         alert('사용자 정보가 수정되었습니다.');
