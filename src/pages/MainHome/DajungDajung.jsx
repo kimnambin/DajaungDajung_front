@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
 import './DajungDajung.css';
-import banner1 from "../../assets/banner1.png";
-import banner2 from "../../assets/banner2.png";
-import { getImgSrc } from '../../utils/image';
+import banner1 from '../../assets/banner1.png';
+import banner2 from '../../assets/banner2.png';
+import {getImgSrc} from '../../utils/image';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -25,12 +25,12 @@ const DajungDajung = () => {
 
   const paginatedProducts = products.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    currentPage * ITEMS_PER_PAGE,
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBannerIndex((prev) => (prev + 1) % bannerImages.length);
+      setBannerIndex(prev => (prev + 1) % bannerImages.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -41,19 +41,22 @@ const DajungDajung = () => {
 
   const fetchProductList = async () => {
     try {
-      const response = await axios.get('https://b547-222-232-138-33.ngrok-free.app/', {
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
+      const response = await axios.get(
+        'https://64c8-222-232-138-33.ngrok-free.app/',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '69420',
+          },
+          withCredentials: true,
         },
-        withCredentials: true,
-      });
+      );
 
       console.log('응답 확인:', response.data);
 
       const data = Array.isArray(response.data) ? response.data : [];
 
-      const formattedData = data.map((item) => ({
+      const formattedData = data.map(item => ({
         id: item.id,
         name: item.title,
         price: item.price,
@@ -76,7 +79,7 @@ const DajungDajung = () => {
             src={bannerImages[bannerIndex]}
             alt="배너 이미지"
             className="banner-img"
-            style={{ cursor: 'pointer' }}
+            style={{cursor: 'pointer'}}
           />
         </Link>
       </div>
@@ -86,18 +89,23 @@ const DajungDajung = () => {
 
         <div className="product-grid">
           {paginatedProducts.length > 0 ? (
-            paginatedProducts.map((item) => (
+            paginatedProducts.map(item => (
               <Link
                 key={item.id}
                 to={`/items/${item.id}`} // 프론트 상세 페이지로 이동
-                className="product-card-link"
-              >
+                className="product-card-link">
                 <div className="product-card">
-                  <img className="card-image" src={getImgSrc(item.img)} alt="상품 이미지" />
+                  <img
+                    className="card-image"
+                    src={getImgSrc(item.img)}
+                    alt="상품 이미지"
+                  />
                   <div className="card-info">
                     <div className="card-name">{item.name}</div>
                     <div className="card-bottom">
-                      <div className="card-price">{Number(item.price).toLocaleString()}원</div>
+                      <div className="card-price">
+                        {Number(item.price).toLocaleString()}원
+                      </div>
                       <div className="card-time">{item.time}</div>
                     </div>
                   </div>
@@ -112,23 +120,22 @@ const DajungDajung = () => {
         <div className="pagination">
           <button
             className="arrow"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          >
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>
             {'<'}
           </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+          {Array.from({length: totalPages}, (_, i) => i + 1).map(n => (
             <button
               key={n}
               className={`page-number ${n === currentPage ? 'active' : ''}`}
-              onClick={() => setCurrentPage(n)}
-            >
+              onClick={() => setCurrentPage(n)}>
               {n}
             </button>
           ))}
           <button
             className="arrow"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          >
+            onClick={() =>
+              setCurrentPage(prev => Math.min(prev + 1, totalPages))
+            }>
             {'>'}
           </button>
         </div>

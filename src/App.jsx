@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
@@ -11,7 +11,8 @@ import Signup from './pages/Signup/Signup';
 import FindId from './pages/FindId/FindId';
 import ResetPwd from './pages/ResetPwd/ResetPwd';
 import NewPwd from './pages/NewPwd/NewPwd';
-import DajungDajung from './pages/MainHome/DajungDajung';
+// import DajungDajung from './pages/MainHome/DajungDajung';
+import DajungDajung from './pages/MainHome/DajungDajungTest';
 import UserInfos from './pages/UserInfos/userInfos';
 import UserInfo from './components/userInfo/userInfo';
 import MyPage from './pages/MyPage/myPage';
@@ -26,7 +27,7 @@ function App() {
       <Header />
       <main className="main-content">
         <Routes>
-          <Route path='/store/:id' element={<UserInfos />} />
+          <Route path="/store/:id" element={<UserInfos />} />
           <Route path="/items/create" element={<ItemsCreate />} />
           <Route path="/items" element={<ItemsSearch />} />
           <Route path="/items/:id" element={<ItemsDetail />} />
@@ -37,12 +38,12 @@ function App() {
           <Route path="/resetpwd" element={<ResetPwd />} />
           <Route path="/newpwd" element={<NewPwd />} />
           <Route path="/" element={<DajungDajung />} />
-          <Route path='/users' element={<MyPage />}>
-            <Route path='mypage' element={<UserInfo />} />
-            <Route path='mypage/update' element={<UpdateInfo />} />
-            <Route path='unsubscribe' element={<Unsubscribe />} />
-            <Route path='upload' element={<UploadItems />} />
-            <Route path='likes' element={<UserLikes />} />
+          <Route path="/users" element={<MyPage />}>
+            <Route path="mypage" element={<UserInfo />} />
+            <Route path="mypage/update" element={<UpdateInfo />} />
+            <Route path="unsubscribe" element={<Unsubscribe />} />
+            <Route path="upload" element={<UploadItems />} />
+            <Route path="likes" element={<UserLikes />} />
           </Route>
         </Routes>
       </main>
