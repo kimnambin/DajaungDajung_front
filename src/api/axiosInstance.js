@@ -1,8 +1,12 @@
 import axios from 'axios';
+const { VITE_BACK_URL } = import.meta.env
+
+console.log(VITE_BACK_URL)
 
 const axiosInstance = axios.create({
-  baseURL: 'https://b547-222-232-138-33.ngrok-free.app',
+  baseURL: VITE_BACK_URL,
   withCredentials: true,
+  credentials: 'include',
   headers: {
     'ngrok-skip-browser-warning': '1233123',
   },

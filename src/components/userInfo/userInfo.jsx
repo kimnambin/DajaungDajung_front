@@ -1,15 +1,36 @@
 import styles from './userInfo.module.css';
 import { getImgSrc } from '../../utils/image';
 import { getDaysAgo } from '../../utils/date';
-import { useOutletContext } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axiosInstance from '../../api/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserInfo({ userData }) {
-  let finalUserData = { userData };
-  if (window.location.pathname === '/users/mypage') {
-    const { contextUserData } = useOutletContext();
-    finalUserData = contextUserData;
-  } else {
-    finalUserData = finalUserData.userData
+  const [finalUserData, setFinalUserData] = useState(null);
+  const navigate = useNavigate();
+
+  console.log("userData:", userData)
+  
+  useEffect(() => {
+    if (userData) {
+      setFinalUserData(userData);
+    } else {
+      axiosInstance
+        .get('/users/mypage')
+        .then(response => {
+          setFinalUserData(response.data[0]);
+        })
+        .catch(err => {
+          if (err.response?.status === 404) {
+            alert('존재하지 않는 사용자입니다.\n메인페이지로 이동합니다.');
+            navigate('/');
+          }
+        });
+    }
+  }, [userData, navigate]);
+
+  if (!finalUserData) {
+    return <div className={styles.userInfo}>로딩중...</div>;
   }
 
   return (
