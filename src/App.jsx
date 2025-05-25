@@ -19,6 +19,7 @@ import UpdateInfo from './components/updateInfo/UpdateInfo';
 import Unsubscribe from './pages/unsubscribe/Unsubscribe';
 import UploadItems from './pages/UploadItems/UploadItems';
 import UserLikes from './pages/UserLikes/UserLikes';
+import Chat from './pages/Chat/Chat';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path='upload' element={<UploadItems />} />
             <Route path='likes' element={<UserLikes />} />
           </Route>
+          <Route path='/chats' element={<Chat />}/>
         </Routes>
       </main>
       <Footer />

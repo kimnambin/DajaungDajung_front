@@ -42,6 +42,7 @@ const ItemsSearch = () => {
         const response = await getCategories();
         setCategories(response.data);
       } catch (error) {
+          console.log('카테고리 목록 조회 에러: ', error);
       }
     };
 

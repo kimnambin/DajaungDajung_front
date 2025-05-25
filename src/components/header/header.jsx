@@ -62,7 +62,7 @@ function Header() {
         </form>
 
         <div className={styles.navItems}>
-          <Link to='#' className={styles.chating}>채팅하기</Link>
+          <Link to='/chats' className={styles.chating}>채팅하기</Link>
           <Link to='/items/create' className={styles.selling}>판매하기</Link>
 
           {nickname ? (
