@@ -2,3 +2,5 @@ node_modules/
 .vite/
 dist/
 .env
+
+/src/pages/MainHome/DajungDajungStyled.ts
