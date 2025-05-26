@@ -1,14 +1,14 @@
-import React, {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
 import {ProductProps} from '../../type/product.model';
 import './DajungDajung.css';
-// import {DajungContainer} from './DajungDajungStyled';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {fetchProductList} from '../../api/productApi';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -17,13 +17,18 @@ const bannerImages = [banner1, banner2];
 const ITEMS_PER_PAGE = 12;
 
 const DajungDajung = () => {
-  const [products, setProducts] = useState<ProductProps[]>([]);
   const [showProducts, setShowProducts] = useState<ProductProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [bannerIndex, setBannerIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef(null);
+
+  const queryClient = useQueryClient();
+  const {data: products = [], isLoading: isQueryLoading} = useQuery({
+    queryKey: ['getProduct'],
+    queryFn: fetchProductList,
+  });
 
   // 위치가 하단 시 호출
   useEffect(() => {
@@ -50,36 +55,6 @@ const DajungDajung = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const fetchProductList = async () => {
-      try {
-        // 임시로 다른 API 사용
-        const response = await axios.get(
-          'https://webtoon-crawler.nomadcoders.workers.dev/today',
-        );
-
-        const data = Array.isArray(response.data) ? response.data : [];
-
-        const formattedData = data.map(item => ({
-          id: item.id,
-          name: item.title,
-          // price: item.price,
-          // time: dayjs(item.created_at).fromNow(),
-          img: item.thumb,
-        }));
-
-        if (formattedData.length > 0) {
-          setProducts(formattedData);
-        }
-      } catch (error) {
-        console.error('상품 목록 불러오기 실패:', error);
-        setProducts([]);
-      }
-    };
-
-    fetchProductList();
-  }, []);
-
   // 초기 데이터
   useEffect(() => {
     if (products.length > 0) {
@@ -95,7 +70,7 @@ const DajungDajung = () => {
 
   // 다음 데이터
   const loadMoreItems = () => {
-    if (isLoading) return;
+    if (isLoading || isQueryLoading) return;
     setIsLoading(true);
 
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
