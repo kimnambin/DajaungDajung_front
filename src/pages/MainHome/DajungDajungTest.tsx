@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
-import {ProductProps} from '../../type/product.model';
+import {ProductProps} from '../../types/product.model';
 import './DajungDajung.css';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {fetchProductList} from '../../api/productApi';
