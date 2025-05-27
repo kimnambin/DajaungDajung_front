@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ResetPwd.css';
+const {VITE_BACK_URL}=import.meta.env
 
 const ResetPwd = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const ResetPwd = () => {
 
     try {
       const response = await axios.post(
-        'https://b547-222-232-138-33.ngrok-free.app/auth/reset',
+        `${VITE_BACK_URL}/auth/reset`,
         {
           name: form.name,
           email: form.email,

@@ -9,6 +9,7 @@ import './DajungDajung.css';
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
 import {getImgSrc} from '../../utils/image';
+const {VITE_BACK_URL} = import.meta.env;
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -41,16 +42,13 @@ const DajungDajung = () => {
 
   const fetchProductList = async () => {
     try {
-      const response = await axios.get(
-        'https://64c8-222-232-138-33.ngrok-free.app/',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': '69420',
-          },
-          withCredentials: true,
+      const response = await axios.get(VITE_BACK_URL, {
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
         },
-      );
+        withCredentials: true,
+      });
 
       console.log('응답 확인:', response.data);
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Comments.css';
 import delete_btn from '../../../assets/ic_x.svg';
 import { getImgSrc } from '../../../utils/image';
-import axios from 'axios';
 import { authRequest } from '../../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
