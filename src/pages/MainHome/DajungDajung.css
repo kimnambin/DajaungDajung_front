@@ -26,7 +26,7 @@
 }
 
 .product-card {
-  @apply w-48 h-auto flex flex-col rounded overflow-hidden;
+  @apply w-48 h-auto flex flex-col rounded overflow-hidden border border-gray-200;
 }
 
 .product-card:hover {
@@ -38,7 +38,7 @@
 }
 
 .card-image {
-  @apply w-full h-56 object-cover;
+  @apply w-full h-56 object-cover border-b border-gray-200;
 }
 
 .card-info {

@@ -1,13 +1,12 @@
 import {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
 import {ProductProps} from '../../types/product.model';
 import './DajungDajung.css';
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {fetchProductList} from '../../api/productApi';
 
 dayjs.extend(relativeTime);
@@ -22,13 +21,14 @@ const DajungDajung = () => {
   const [bannerIndex, setBannerIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const observerRef = useRef(null);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const queryClient = useQueryClient();
   const {data: products = [], isLoading: isQueryLoading} = useQuery({
     queryKey: ['getProduct'],
     queryFn: fetchProductList,
   });
+
+  console.log(showProducts);
 
   // 위치가 하단 시 호출
   useEffect(() => {
@@ -120,7 +120,9 @@ const DajungDajung = () => {
                   />
                   <div className="card-info">
                     <div className="card-name">{item.name}</div>
-                    <div className="card-bottom"></div>
+                    <div className="card-bottom">
+                      <div className="card-price">{item.id}</div>
+                    </div>
                   </div>
                 </div>
               </Link>
