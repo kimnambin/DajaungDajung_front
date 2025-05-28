@@ -1,44 +1,44 @@
 import styled from 'styled-components';
 import ChatRoom from '../../components/chat/ChatRoom';
 import ChatRoomDetail from '../../components/chat/ChatRoomDetail';
-import React, { useState } from 'react';
-import { ChatRoomProps } from '../../types/chat.type';
+import React, { JSX, useState } from 'react';
+import { ChatRoom as ChatRoomProps } from '../../types/chat.type';
 
-const chatRooms: ChatRoomProps[] = [
+const mockChatRoom: ChatRoomProps[] = [
   {
     id: 1,
     nickname: '가나다',
     itemTitle: '에어팟',
-    timeAgo: '1시간 전',
-    profileImage: undefined,
+    updatedAt: '2025-05-28 19:33:55',
+    profileImageId: 1,
     isRead: false,
   },
   {
     id: 2,
     nickname: '마바사',
     itemTitle: '책상',
-    timeAgo: '2시간 전',
-    profileImage: undefined,
+    updatedAt: '2025-05-24 19:33:55',
+    profileImageId: 1,
     isRead: true,
   },
   {
     id: 3,
     nickname: '아자차',
     itemTitle: '신발',
-    timeAgo: '3시간 전',
-    profileImage: undefined,
+    updatedAt: '2025-05-20 19:33:55',
+    profileImageId: 1,
     isRead: true,
   },
 ];
 
-function Chat() {
+function Chat(): JSX.Element {
   const [selectedRoom, setSelectedRoom] = useState<ChatRoomProps | null>(null);
 
-  const handleSelectRoom = (room: ChatRoomProps) => {
+  const handleSelectRoom = (room: ChatRoomProps): void => {
     setSelectedRoom(room);
   };
 
-  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>): void => {
     const clickedElement = e.target as HTMLElement;
 
     if (
@@ -56,7 +56,7 @@ function Chat() {
       <div className="chat_left">
         <div className="chat_room_list">
           <ChatRoom
-            rooms={chatRooms}
+            rooms={mockChatRoom}
             onSelect={handleSelectRoom}
             selectedRoomId={selectedRoom?.id ?? null}
           />
@@ -72,7 +72,6 @@ function Chat() {
 const ChatStyle = styled.div`
   display: flex;
   width: 100%;
-  /* max-width: 1200px; */
   height: 100vh;
   margin-top: 60px;
 

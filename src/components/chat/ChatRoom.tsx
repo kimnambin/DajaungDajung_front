@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import defaultProfile from '../../assets/default_profile.svg';
-import { ChatRoomProps } from '../../types/chat.type';
+import { ChatRoom as ChatRoomProps } from '../../types/chat.type';
+import { JSX } from 'react';
+import { getDaysAgo } from '../../utils/date';
+import { getImgSrc } from '../../utils/image';
 
 interface Props {
   rooms: ChatRoomProps[];
@@ -8,7 +11,7 @@ interface Props {
   selectedRoomId: number | null;
 }
 
-function ChatRoom({ rooms, onSelect, selectedRoomId }: Props) {
+function ChatRoom({ rooms, onSelect, selectedRoomId }: Props): JSX.Element {
   return (
     <>
       {rooms.map((room) => (
@@ -19,7 +22,7 @@ function ChatRoom({ rooms, onSelect, selectedRoomId }: Props) {
         >
           <div className="chatRoom_content">
             <img
-              src={room.profileImage || defaultProfile}
+              src={getImgSrc(room.profileImageId) || defaultProfile}
               width={50}
               style={{ borderRadius: '100px' }}
             />
@@ -29,7 +32,7 @@ function ChatRoom({ rooms, onSelect, selectedRoomId }: Props) {
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
                 <p className="chatRoom_subtxt">
-                  {room.itemTitle} - {room.timeAgo}
+                  {room.itemTitle} - {getDaysAgo(room.updatedAt)}
                 </p>
                 {!room.isRead && <div className="unread_icon" />}
               </div>
@@ -42,9 +45,10 @@ function ChatRoom({ rooms, onSelect, selectedRoomId }: Props) {
 }
 
 const ChatRoomStyle = styled.div<{ $isSelected?: boolean }>`
+  height: 72px;
   padding: 14px 28px;
+  display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  height: auto;
   cursor: pointer;
   background-color: ${({ $isSelected }) => ($isSelected ? '#FFEDFA' : 'white')};
 
