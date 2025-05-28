@@ -5,6 +5,7 @@ import {
 } from '../../types/chat.type';
 import ChatItem from './ChatItem';
 import styled from 'styled-components';
+import ChatInput from './ChatInput';
 
 const mockChatRoomDetail: ChatRoomDetailProps = {
   item: {
@@ -57,12 +58,22 @@ function ChatRoomDetail({ room }: Props): JSX.Element {
   return (
     <ChatRoomDetailStyle>
       <ChatItem item={mockChatRoomDetail.item} />
-      <div>채팅메시지</div>
-      <div>입력창</div>
+      <div className="message_area">채팅메시지</div>
+      <ChatInput />
     </ChatRoomDetailStyle>
   );
 }
 
-const ChatRoomDetailStyle = styled.div``;
+const ChatRoomDetailStyle = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .message_area {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 100px;
+  }
+`;
 
 export default ChatRoomDetail;
