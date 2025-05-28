@@ -6,42 +6,117 @@ import {
 import ChatItem from './ChatItem';
 import styled from 'styled-components';
 import ChatInput from './ChatInput';
+import ChatMessage from './ChatMessage';
+import { formatDate } from '../../utils/format';
 
 const mockChatRoomDetail: ChatRoomDetailProps = {
+  roomId: 1,
   item: {
     id: 101,
-    title: '에어팟',
-    price: 85000,
-    imageId: 1,
+    title: '에어팟 프로',
+    imageId: 101,
+    price: 180000,
   },
   me: {
     id: 1,
-    nickname: '나',
-    profileImageId: 1,
+    nickname: '내닉네임',
+    profileImageId: 11,
   },
   other: {
     id: 2,
     nickname: '가나다',
-    profileImageId: 100,
+    profileImageId: 22,
   },
   messages: [
     {
       id: 1,
       senderId: 2,
-      content: '에어팟 아직 있나요?',
-      createdAt: '2025-05-28 19:31:00',
+      content: '안녕하세요. 에어팟 아직 있나요?',
+      createdAt: '2025-05-28T12:30:00',
     },
     {
       id: 2,
       senderId: 1,
-      content: '네, 아직 판매 중입니다!',
-      createdAt: '2025-05-28 19:32:10',
+      content: '네, 아직 판매 중이에요!',
+      createdAt: '2025-05-28T12:31:10',
     },
     {
       id: 3,
       senderId: 2,
-      content: '거래 장소는 어디가 괜찮으세요?',
-      createdAt: '2025-05-28 19:33:55',
+      content: '직거래 가능한가요?',
+      createdAt: '2025-05-28T12:32:45',
+    },
+    {
+      id: 1,
+      senderId: 2,
+      content: '안녕하세요. 에어팟 아직 있나요?',
+      createdAt: '2025-05-28T12:30:00',
+    },
+    {
+      id: 2,
+      senderId: 1,
+      content: '네, 아직 판매 중이에요!',
+      createdAt: '2025-05-28T12:31:10',
+    },
+    {
+      id: 3,
+      senderId: 2,
+      content: '직거래 가능한가요?',
+      createdAt: '2025-05-28T12:32:45',
+    },
+    {
+      id: 1,
+      senderId: 2,
+      content: '안녕하세요. 에어팟 아직 있나요?',
+      createdAt: '2025-05-28T12:30:00',
+    },
+    {
+      id: 2,
+      senderId: 1,
+      content: '네, 아직 판매 중이에요!',
+      createdAt: '2025-05-28T12:31:10',
+    },
+    {
+      id: 3,
+      senderId: 2,
+      content: '직거래 가능한가요?',
+      createdAt: '2025-05-28T12:32:45',
+    },
+    {
+      id: 1,
+      senderId: 2,
+      content: '안녕하세요. 에어팟 아직 있나요?',
+      createdAt: '2025-05-28T12:30:00',
+    },
+    {
+      id: 2,
+      senderId: 1,
+      content: '네, 아직 판매 중이에요!',
+      createdAt: '2025-05-28T12:31:10',
+    },
+    {
+      id: 3,
+      senderId: 2,
+      content: '직거래 가능한가요?',
+      createdAt: '2025-05-28T12:32:45',
+    },
+    {
+      id: 1,
+      senderId: 2,
+      content: '안녕하세요. 에어팟 아직 있나요?',
+      createdAt: '2025-05-28T12:30:00',
+    },
+    {
+      id: 2,
+      senderId: 1,
+      content: '네, 아직 판매 중이에요!',
+      createdAt: '2025-05-28T12:31:10',
+    },
+    {
+      id: 3,
+      senderId: 2,
+      content: '직거래 가능한가요?',
+      createdAt: '2025-05-28T12:32:45',
     },
   ],
 };
@@ -57,22 +132,61 @@ function ChatRoomDetail({ room }: Props): JSX.Element {
 
   return (
     <ChatRoomDetailStyle>
-      <ChatItem item={mockChatRoomDetail.item} />
-      <div className="message_area">채팅메시지</div>
-      <ChatInput />
+      <div className="chat_item_area">
+        <ChatItem item={mockChatRoomDetail.item} />
+      </div>
+      <div className="message_area">
+        {mockChatRoomDetail.messages.map((msg) => (
+          <ChatMessage
+            key={msg.id}
+            message={msg.content}
+            isMine={msg.senderId === mockChatRoomDetail.me.id}
+            time={formatDate(msg.createdAt)}
+            profileImage={
+              msg.senderId !== mockChatRoomDetail.me.id
+                ? mockChatRoomDetail.other.profileImageId
+                : mockChatRoomDetail.me.profileImageId
+            }
+          />
+        ))}
+        <div className="chat_input_area">
+          <ChatInput />
+        </div>
+      </div>
     </ChatRoomDetailStyle>
   );
 }
 
 const ChatRoomDetailStyle = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   position: relative;
 
+  .chat_item_area {
+    flex-shrink: 0;
+  }
+
   .message_area {
     flex: 1;
     overflow-y: auto;
-    padding-bottom: 100px;
+    height: 100%;
+    min-height: 0;
+    position: relative;
+    z-index: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .chat_input_area {
+    position: sticky;
+    bottom: 0;
+    background: transparent;
+    z-index: 1;
   }
 `;
 

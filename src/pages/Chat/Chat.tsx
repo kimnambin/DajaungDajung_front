@@ -72,7 +72,7 @@ function Chat(): JSX.Element {
 const ChatStyle = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 80px - 35px);
   margin-top: 60px;
 
   .chat_left {

@@ -26,28 +26,21 @@ function ChatInput(): JSX.Element {
 }
 
 const ChatInputStyle = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 16px;
   padding: 16px;
-  margin: 8px 20px;
-  backdrop-filter: blur(10px);
   box-sizing: border-box;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  background-color: transparent;
 
   textarea {
     width: 100%;
-    min-height: 60px;
+    min-height: 80px;
     resize: none;
     padding: 16px 100px 16px 16px;
     border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 16px;
+    border-radius: 12px;
     font-size: 16px;
     outline: none;
-    background-color: transparent;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.4);
   }
 
   button {

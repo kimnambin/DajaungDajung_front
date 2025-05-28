@@ -16,7 +16,7 @@ export interface ChatMessage {
 export interface ChatUser {
   id: number;
   nickname: string;
-  profileImageId?: number;
+  profileImageId: number;
 }
 
 export interface ChatItemInfo {
@@ -27,6 +27,7 @@ export interface ChatItemInfo {
 }
 
 export interface ChatRoomDetail {
+  roomId: number;
   item: ChatItemInfo;
   me: ChatUser;
   other: ChatUser;
