@@ -13,8 +13,8 @@ import ResetPwd from './pages/ResetPwd/ResetPwd';
 import NewPwd from './pages/NewPwd/NewPwd';
 
 // TODO : 임시로 사용 중
-// import DajungDajung from './pages/MainHome/DajungDajung';
-import DajungDajung from './pages/MainHome/DajungDajungTest';
+import DajungDajung from './pages/MainHome/DajungDajung';
+// import DajungDajung from './pages/MainHome/DajungDajungTest';
 import UserInfos from './pages/UserInfos/userInfos';
 import UserInfo from './components/userInfo/userInfo';
 import MyPage from './pages/MyPage/myPage';

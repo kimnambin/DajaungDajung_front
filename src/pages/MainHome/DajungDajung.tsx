@@ -1,16 +1,13 @@
 import {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+
+import './DajungDajung.css';
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
+import {getImgSrc} from '../../utils/image';
 import {ProductProps} from '../../types/product.model';
-import './DajungDajung.css';
 import {useQuery} from '@tanstack/react-query';
 import {fetchProductList} from '../../api/productApi';
-
-dayjs.extend(relativeTime);
-dayjs.locale('ko');
 
 const bannerImages = [banner1, banner2];
 const ITEMS_PER_PAGE = 12;
@@ -87,6 +84,8 @@ const DajungDajung = () => {
     setIsLoading(false);
   };
 
+  console.log(showProducts);
+
   return (
     <div className="dajung-container">
       <div className="banner-box">
@@ -108,18 +107,21 @@ const DajungDajung = () => {
             showProducts.map(item => (
               <Link
                 key={item.id}
-                to={`/items/${item.id}`}
+                to={`/items/${item.id}`} // 프론트 상세 페이지로 이동
                 className="product-card-link">
                 <div className="product-card">
                   <img
                     className="card-image"
-                    // src={item.img}
+                    src={getImgSrc(item.img)}
                     alt="상품 이미지"
                   />
                   <div className="card-info">
-                    {/* <div className="card-name">{item.name}</div> */}
+                    <div className="card-name">{item.name}</div>
                     <div className="card-bottom">
-                      <div className="card-price">{item.id}</div>
+                      <div className="card-price">
+                        {Number(item.price).toLocaleString()}원
+                      </div>
+                      <div className="card-time">{item.time}</div>
                     </div>
                   </div>
                 </div>

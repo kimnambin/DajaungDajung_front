@@ -1,14 +1,34 @@
 import axios from 'axios';
+const {VITE_BACK_URL} = import.meta.env;
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ko');
 
 export const fetchProductList = async () => {
-  // TODO : 추후 실제 API로 교체 예정
   const response = await axios.get(
-    'https://webtoon-crawler.nomadcoders.workers.dev/today',
+    // TODO : Test API
+    // 'https://webtoon-crawler.nomadcoders.workers.dev/today',
+    VITE_BACK_URL,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '69420',
+      },
+      withCredentials: true,
+    },
   );
+
   const data = Array.isArray(response.data) ? response.data : [];
+
+  console.log(response.data);
   return data.map(item => ({
     id: item.id,
     name: item.title,
-    img: item.thumb,
+    img: item.img_id,
+    price: item.price,
+    time: dayjs(item.created_at).fromNow(),
   }));
 };
