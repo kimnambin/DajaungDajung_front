@@ -20,18 +20,18 @@ function ChatRoom({ rooms, onSelect, selectedRoomId }: Props): JSX.Element {
           $isSelected={room.id === selectedRoomId}
           onClick={() => onSelect(room)}
         >
-          <div className="chatRoom_content">
+          <div className="chat_room_content">
             <img
               src={getImgSrc(room.profileImageId) || defaultProfile}
               width={50}
               style={{ borderRadius: '100px' }}
             />
-            <div className="cahtRoom_txt">
-              <p className="chatRoom_nickname">{room.nickname}</p>
+            <div className="chat_room_text">
+              <p className="chat_room_nickname">{room.nickname}</p>
               <div
                 style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
               >
-                <p className="chatRoom_subtxt">
+                <p className="chat_room_subtxt">
                   {room.itemTitle} - {getDaysAgo(room.updatedAt)}
                 </p>
                 {!room.isRead && <div className="unread_icon" />}
@@ -52,21 +52,21 @@ const ChatRoomStyle = styled.div<{ $isSelected?: boolean }>`
   cursor: pointer;
   background-color: ${({ $isSelected }) => ($isSelected ? '#FFEDFA' : 'white')};
 
-  .chatRoom_content {
+  .chat_room_content {
     display: flex;
     gap: 16px;
     align-items: center;
 
-    .cahtRoom_txt {
+    .chat_room_text {
       display: flex;
       flex-direction: column;
       gap: 8px;
 
-      .chatRoom_nickname {
+      .chat_room_nickname {
         font-size: 18px;
       }
 
-      .chatRoom_subtxt {
+      .chat_room_subtxt {
         font-size: 15px;
         color: rgba(0, 0, 0, 0.5);
       }
