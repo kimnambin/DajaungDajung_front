@@ -31,13 +31,13 @@ const ChatItemStyle = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100px;
-  padding: 0 32px;
+  padding: 0 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   .chatitem_left {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 20px;
 
     img {
       width: 60px;

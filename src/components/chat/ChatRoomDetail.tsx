@@ -127,7 +127,7 @@ interface Props {
 
 function ChatRoomDetail({ room }: Props): JSX.Element {
   if (!room) {
-    return <div>채팅방을 선택하세요.</div>;
+    return <></>;
   }
 
   return (
