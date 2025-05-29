@@ -84,8 +84,6 @@ const DajungDajung = () => {
     setIsLoading(false);
   };
 
-  console.log(showProducts);
-
   return (
     <div className="dajung-container">
       <div className="banner-box">

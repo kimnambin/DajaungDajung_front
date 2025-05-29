@@ -8,22 +8,16 @@ dayjs.extend(relativeTime);
 dayjs.locale('ko');
 
 export const fetchProductList = async () => {
-  const response = await axios.get(
-    // TODO : Test API
-    // 'https://webtoon-crawler.nomadcoders.workers.dev/today',
-    VITE_BACK_URL,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '69420',
-      },
-      withCredentials: true,
+  const response = await axios.get(VITE_BACK_URL, {
+    headers: {
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': '69420',
     },
-  );
+    withCredentials: true,
+  });
 
   const data = Array.isArray(response.data) ? response.data : [];
 
-  console.log(response.data);
   return data.map(item => ({
     id: item.id,
     name: item.title,
