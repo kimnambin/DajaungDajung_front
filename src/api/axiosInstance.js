@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
   },
 });
 
-export const authRequest = async ({ method, url, data, navigate }) => {
+export const authRequest = async ({method, url, data, navigate}) => {
   try {
     const response = await axiosInstance({
       method,
@@ -22,11 +22,13 @@ export const authRequest = async ({ method, url, data, navigate }) => {
     return response.data;
   } catch (error) {
     if (error.response?.status === 400) {
-      const goToLogin = window.confirm('로그인이 필요합니다. 로그인하시겠습니까?');
+      const goToLogin = window.confirm(
+        '로그인이 필요합니다. 로그인하시겠습니까?',
+      );
       if (goToLogin) navigate('/signin');
     }
     throw error;
   }
 };
 
-export default axiosInstance
+export default axiosInstance;
