@@ -15,11 +15,11 @@ function ChatItem({ item }: Props): JSX.Element {
   return (
     <ChatItemStyle>
       <div className="chatitem_left">
-        <img src={getImgSrc(item.imageId)} alt="Item" />
-        <p className="chatitem_title">{item.title}</p>
-        <p className="chatitem_price">{formatNumber(item.price)}원</p>
+        <img src={getImgSrc(item.itemImg)} alt="Item" />
+        <p className="chatitem_title">{item.itemTitle}</p>
+        <p className="chatitem_price">{formatNumber(item.itemPrice)}원</p>
       </div>
-      <button onClick={() => navigate(`/items/${item.id}`)}>
+      <button onClick={() => navigate(`/items/${item.itemId}`)}>
         상품 보러가기
       </button>
     </ChatItemStyle>

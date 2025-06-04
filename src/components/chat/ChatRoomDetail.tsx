@@ -1,5 +1,7 @@
-import { JSX } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import {
+  ChatItemInfo,
+  ChatMessage as ChatMessageProps,
   ChatRoomDetail as ChatRoomDetailProps,
   ChatRoom as ChatRoomProps,
 } from '../../types/chat.type';
@@ -8,151 +10,132 @@ import styled from 'styled-components';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import { formatDate } from '../../utils/format';
-
-const mockChatRoomDetail: ChatRoomDetailProps = {
-  roomId: 1,
-  item: {
-    id: 101,
-    title: '에어팟 프로',
-    imageId: 101,
-    price: 180000,
-  },
-  me: {
-    id: 1,
-    nickname: '내닉네임',
-    profileImageId: 11,
-  },
-  other: {
-    id: 2,
-    nickname: '가나다',
-    profileImageId: 22,
-  },
-  messages: [
-    {
-      id: 1,
-      senderId: 2,
-      content: '안녕하세요. 에어팟 아직 있나요?',
-      createdAt: '2025-05-28T12:30:00',
-    },
-    {
-      id: 2,
-      senderId: 1,
-      content: '네, 아직 판매 중이에요!',
-      createdAt: '2025-05-28T12:31:10',
-    },
-    {
-      id: 3,
-      senderId: 2,
-      content: '직거래 가능한가요?',
-      createdAt: '2025-05-28T12:32:45',
-    },
-    {
-      id: 4,
-      senderId: 2,
-      content: '안녕하세요. 에어팟 아직 있나요?',
-      createdAt: '2025-05-28T12:30:00',
-    },
-    {
-      id: 5,
-      senderId: 1,
-      content: '네, 아직 판매 중이에요!',
-      createdAt: '2025-05-28T12:31:10',
-    },
-    {
-      id: 6,
-      senderId: 2,
-      content: '직거래 가능한가요?',
-      createdAt: '2025-05-28T12:32:45',
-    },
-    {
-      id: 7,
-      senderId: 2,
-      content: '안녕하세요. 에어팟 아직 있나요?',
-      createdAt: '2025-05-28T12:30:00',
-    },
-    {
-      id: 8,
-      senderId: 1,
-      content: '네, 아직 판매 중이에요!',
-      createdAt: '2025-05-28T12:31:10',
-    },
-    {
-      id: 9,
-      senderId: 2,
-      content: '직거래 가능한가요?',
-      createdAt: '2025-05-28T12:32:45',
-    },
-    {
-      id: 10,
-      senderId: 2,
-      content: '안녕하세요. 에어팟 아직 있나요?',
-      createdAt: '2025-05-28T12:30:00',
-    },
-    {
-      id: 11,
-      senderId: 1,
-      content: '네, 아직 판매 중이에요!',
-      createdAt: '2025-05-28T12:31:10',
-    },
-    {
-      id: 12,
-      senderId: 2,
-      content: '직거래 가능한가요?',
-      createdAt: '2025-05-28T12:32:45',
-    },
-    {
-      id: 13,
-      senderId: 2,
-      content: '안녕하세요. 에어팟 아직 있나요?',
-      createdAt: '2025-05-28T12:30:00',
-    },
-    {
-      id: 14,
-      senderId: 1,
-      content: '네, 아직 판매 중이에요!',
-      createdAt: '2025-05-28T12:31:10',
-    },
-    {
-      id: 15,
-      senderId: 2,
-      content: '직거래 가능한가요?',
-      createdAt: '2025-05-28T12:32:45',
-    },
-  ],
-};
+import { Socket } from 'socket.io-client';
+import { useNavigate } from 'react-router-dom';
+import { authRequest } from '../../api/axiosInstance';
 
 interface Props {
   room: ChatRoomProps | null;
+  socket: Socket | null;
 }
 
-function ChatRoomDetail({ room }: Props): JSX.Element {
-  if (!room) {
-    return <></>;
-  }
+function ChatRoomDetail({ room, socket }: Props): JSX.Element {
+  const [messages, setMessages] = useState<ChatMessageProps[]>([]);
+  const [chatItem, setChatItem] = useState<ChatItemInfo | null>(null);
+  const navigate = useNavigate();
+
+  const fetchMessages = async () => {
+    if (!room) {
+      return;
+    }
+    try {
+      const data = await authRequest({
+        method: 'GET',
+        url: `/chats/${room.roomId}`,
+        data: {},
+        navigate,
+      });
+      setMessages(data.map(toCamelCase));
+
+      if (data.length > 0) {
+        const { item_id, item_title, item_price, item_img } = data[0];
+
+        setChatItem({
+          itemId: item_id,
+          itemTitle: item_title,
+          itemPrice: item_price,
+          itemImg: item_img,
+        });
+      }
+    } catch (error) {
+      console.error('채팅 메시지 불러오기 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!socket || !room) {
+      return;
+    }
+
+    // 방 입장
+    socket.emit('joinRoom', room.roomId);
+    // 읽음 처리
+    socket.emit('markAsRead', {
+      room_id: room.roomId,
+      user_id: room.userId === room.user1Id ? room.user2Id : room.user1Id,
+    });
+
+    return () => {
+      // 방 퇴장
+      socket.emit('leaveRoom', room.roomId);
+    };
+  }, [socket, room]);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [room]);
+
+  useEffect(() => {
+    if (!socket) {
+      return;
+    }
+
+    const handleMessage = (msg: ChatMessageProps) => {
+      console.log('서버에서 받은 메시지:', msg);
+      setMessages((prev) => [...prev, msg]);
+    };
+
+    socket.on('chat message', handleMessage);
+
+    return () => {
+      socket.off('chat message', handleMessage);
+    };
+  }, [socket]);
+
+  const handleSend = async (content: string) => {
+    if (!socket || !room) {
+      return;
+    }
+
+    const newMessage = {
+      room_id: room.roomId,
+      sender_id: room.userId === room.user1Id ? room.user2Id : room.user1Id,
+      receiver_id: room.userId,
+      contents: content,
+    };
+
+    socket.emit('sendMessage', newMessage);
+
+    await fetchMessages();
+  };
 
   return (
     <ChatRoomDetailStyle>
-      <div className="chat_item_area">
-        <ChatItem item={mockChatRoomDetail.item} />
-      </div>
-      <div className="message_area">
-        {mockChatRoomDetail.messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            message={msg.content}
-            isMine={msg.senderId === mockChatRoomDetail.me.id}
-            time={formatDate(msg.createdAt)}
-            profileImage={
-              msg.senderId !== mockChatRoomDetail.me.id
-                ? mockChatRoomDetail.other.profileImageId
-                : mockChatRoomDetail.me.profileImageId
-            }
-          />
-        ))}
-        <div className="chat_input_area">
-          <ChatInput />
-        </div>
-      </div>
+      {room && (
+        <>
+          <div className="chat_item_area">
+            {chatItem && <ChatItem item={chatItem} />}
+          </div>
+          <div className="message_area">
+            {messages.map((msg) => (
+              <ChatMessage
+                key={msg.id}
+                message={msg.contents}
+                isMine={msg.senderId !== msg.opponentId}
+                time={formatDate(msg.createdAt)}
+                profileImage={
+                  msg.senderId !== msg.opponentId
+                    ? msg.opponentImg
+                    : msg.opponentImg
+                }
+              />
+            ))}
+            <div className="chat_input_area">
+              <ChatInput onSend={handleSend} />
+            </div>
+          </div>
+        </>
+      )}
     </ChatRoomDetailStyle>
   );
 }
@@ -191,3 +174,22 @@ const ChatRoomDetailStyle = styled.div`
 `;
 
 export default ChatRoomDetail;
+
+function toCamelCase(msg: any): ChatMessage {
+  return {
+    id: msg.id,
+    roomId: msg.room_id,
+    senderId: msg.sender_id,
+    receiverId: msg.receiver_id,
+    contents: msg.contents,
+    createdAt: msg.created_at,
+    isRead: msg.is_read,
+    opponentId: msg.opponent_id,
+    opponentNickname: msg.opponent_nickname,
+    opponentImg: msg.opponent_img,
+    itemId: msg.item_id,
+    itemTitle: msg.item_title,
+    itemPrice: msg.item_price,
+    itemImg: msg.item_img,
+  };
+}

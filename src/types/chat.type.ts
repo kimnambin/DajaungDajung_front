@@ -1,18 +1,33 @@
 export interface ChatRoom {
-  id: number;
-  nickname: string;
-  profileImageId: number;
-  itemTitle: string;
+  roomId: number;
+  user1Id: number;
+  user2Id: number;
+  itemId: number;
+  lastMessage: string;
   updatedAt: string;
-  isRead: boolean;
+  userId: number;
+  nickname: string;
+  imgId: number;
+  unreadCount: number;
 }
 
 export interface ChatMessage {
   id: number;
+  roomId: number;
   senderId: number;
-  content: string;
+  receiverId: number;
+  contents: string;
   createdAt: string;
+  isRead: number;
+  opponentId: number;
+  opponentNickname: string;
+  opponentImg: number;
+  itemId: number;
+  itemTitle: string;
+  itemPrice: number;
+  itemImg: number;
 }
+
 export interface ChatUser {
   id: number;
   nickname: string;
@@ -20,10 +35,10 @@ export interface ChatUser {
 }
 
 export interface ChatItemInfo {
-  id: number;
-  title: string;
-  imageId: number;
-  price: number;
+  itemId: number;
+  itemTitle: string;
+  itemPrice: number;
+  itemImg: number;
 }
 
 export interface ChatRoomDetail {
