@@ -21,7 +21,7 @@ const Comments: React.FC<CommentsProps> = ({
 
   const [newComment, setNewComment] = useState('');
 
-  const addComment = async () => {
+  const addComment = async (retryCount = 0) => {
     if (!newComment.trim()) {
       return;
     }
@@ -36,13 +36,20 @@ const Comments: React.FC<CommentsProps> = ({
       setNewComment('');
       onCommentAdded();
     } catch (error) {
-      console.log('댓글 추가 에러 : ', error);
+      console.error(`댓글 추가 실패 (재시도 ${retryCount}회) : `, error);
+
+      if (retryCount < 2) {
+        setTimeout(() => addComment(retryCount + 1), 1000);
+      } else {
+        console.error('댓글 추가 실패 : ', error);
+      }
     }
   };
 
-  const deleteComment = async (commentId: number) => {
+  const deleteComment = async (commentId: number, retryCount = 0) => {
     try {
       const confirmDelete = window.confirm('댓글을 삭제하시겠습니까?');
+
       if (!confirmDelete) {
         return;
       }
@@ -52,6 +59,7 @@ const Comments: React.FC<CommentsProps> = ({
         url: `/comments/${commentId}`,
         navigate,
       });
+
       onCommentAdded();
     } catch (error: any) {
       if (error.response?.status === 403) {
@@ -59,7 +67,13 @@ const Comments: React.FC<CommentsProps> = ({
       } else if (error.response?.status === 401) {
         console.log('댓글 삭제 권한 없음');
       } else {
-        console.error('댓글 삭제 에러:', error);
+        console.error(`댓글 삭제 실패 (재시도 ${retryCount}회):`, error);
+
+        if (retryCount < 2) {
+          setTimeout(() => deleteComment(commentId, retryCount + 1), 1000);
+        } else {
+          console.error('댓글 삭제 에러:', error);
+        }
       }
     }
   };
@@ -72,7 +86,7 @@ const Comments: React.FC<CommentsProps> = ({
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={addComment}>입력</button>
+        <button onClick={() => addComment()}>입력</button>
       </div>
 
       <div className="comment_container">

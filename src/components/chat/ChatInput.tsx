@@ -14,7 +14,12 @@ function ChatInput({ onSend }: ChatInputProps): JSX.Element {
       return;
     }
 
-    onSend(trimmed);
+    if (typeof onSend === 'function') {
+      onSend(trimmed);
+    } else {
+      console.warn('onSend prop is not a function');
+    }
+
     setMessage('');
   };
 

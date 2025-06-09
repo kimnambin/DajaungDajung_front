@@ -35,7 +35,12 @@ function ChatRoomDetail({ room, socket, onRefreshRooms }: Props): JSX.Element {
         data: {},
         navigate,
       });
-      setMessages(data.map(toCamelCase));
+
+      try {
+        setMessages(data.map(toCamelCase));
+      } catch (setError) {
+        console.error('setMessages 중 오류 발생:', setError);
+      }
 
       if (data.length > 0) {
         const { item_id, item_title, item_price, item_img } = data[0];
@@ -113,7 +118,11 @@ function ChatRoomDetail({ room, socket, onRefreshRooms }: Props): JSX.Element {
 
     socket.emit('sendMessage', newMessage);
 
-    await fetchMessages();
+    try {
+      await fetchMessages();
+    } catch (error) {
+      console.error('fetchMessages 중 오류 발생:', error);
+    }
 
     onRefreshRooms?.();
   };

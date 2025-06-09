@@ -34,46 +34,55 @@ function Chat(): JSX.Element {
     setSelectedRoom(null);
   };
 
-  const fetchChatRooms = useCallback(async () => {
-    try {
-      const data = await authRequest({
-        method: 'GET',
-        url: '/chats',
-        data: {},
-        navigate,
-      });
+  const fetchChatRooms = useCallback(
+    async (retryCount = 0) => {
+      try {
+        const data = await authRequest({
+          method: 'GET',
+          url: '/chats',
+          data: {},
+          navigate,
+        });
 
-      const parsed: ChatRoomProps[] = data.map((room: any) => ({
-        roomId: room.room_id,
-        itemId: room.item_id,
-        lastMessage: room.last_message,
-        updatedAt: room.updated_at,
-        userId: room.user_id,
-        nickname: room.nickname,
-        imgId: room.img_id,
-        meId: room.me_id,
-        unreadCount: Number(room.unread_count),
-      }));
+        const parsed: ChatRoomProps[] = data.map((room: any) => ({
+          roomId: room.room_id,
+          itemId: room.item_id,
+          lastMessage: room.last_message,
+          updatedAt: room.updated_at,
+          userId: room.user_id,
+          nickname: room.nickname,
+          imgId: room.img_id,
+          meId: room.me_id,
+          unreadCount: Number(room.unread_count),
+        }));
 
-      // 최신순 정렬 (optional, 서버에서 이미 정렬해주는 경우 생략 가능)
-      parsed.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+        setChatRooms(parsed);
 
-      setChatRooms(parsed);
-
-      if (state?.opponentId && state?.itemInfo) {
-        const matchedRoom = parsed.find(
-          (room) =>
-            room.userId === state.opponentId &&
-            room.itemId === state.itemInfo?.id,
+        if (state?.opponentId && state?.itemInfo) {
+          const matchedRoom = parsed.find(
+            (room) =>
+              room.userId === state.opponentId &&
+              room.itemId === state.itemInfo?.id,
+          );
+          if (matchedRoom) {
+            setSelectedRoom({ ...matchedRoom, itemInfo: state.itemInfo });
+          }
+        }
+      } catch (error) {
+        console.error(
+          `채팅방 목록 가져오기 실패 (재시도 ${retryCount}회):`,
+          error,
         );
-        if (matchedRoom) {
-          setSelectedRoom({ ...matchedRoom, itemInfo: state.itemInfo });
+
+        if (retryCount < 2) {
+          setTimeout(() => fetchChatRooms(retryCount + 1), 1000); // 1초 후 재시도
+        } else {
+          console.error('채팅방 목록 가져오기 실패:', error);
         }
       }
-    } catch (error) {
-      console.error('채팅방 목록 가져오기 실패:', error);
-    }
-  }, [navigate, state?.opponentId, state?.itemInfo]);
+    },
+    [navigate, state?.opponentId, state?.itemInfo],
+  );
 
   useEffect(() => {
     fetchChatRooms();

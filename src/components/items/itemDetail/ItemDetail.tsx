@@ -58,7 +58,7 @@ function ItemDetail(): JSX.Element {
     fetchCommentData();
   }, [id, fetchCommentData]);
 
-  const handleLikeButton = async (item_id: number) => {
+  const handleLikeButton = async (item_id: number, retryCount = 0) => {
     try {
       const method = isLike ? 'delete' : 'post';
       const url = `/users/likes/${item_id}`;
@@ -69,11 +69,20 @@ function ItemDetail(): JSX.Element {
         prev ? { ...prev, like: isLike ? prev.like - 1 : prev.like + 1 } : prev,
       );
     } catch (error: any) {
-      console.log('좋아요 처리 에러:', error.response?.data || error.message);
+      console.error(`좋아요 처리 실패 (재시도 ${retryCount}회):`, error);
+
+      if (retryCount < 2) {
+        setTimeout(() => handleLikeButton(item_id, retryCount + 1), 1000);
+      } else {
+        console.error(
+          '좋아요 처리 에러:',
+          error.response?.data || error.message,
+        );
+      }
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, retryCount = 0) => {
     try {
       const doDelete = window.confirm('상품을 삭제하시겠습니까?');
       if (doDelete) {
@@ -81,11 +90,17 @@ function ItemDetail(): JSX.Element {
         navigate('/');
       }
     } catch (error) {
-      console.log('상품 삭제 에러 : ', error);
+      console.error(`상품 삭제 실패 (재시도 ${retryCount}회):`, error);
+
+      if (retryCount < 2) {
+        setTimeout(() => handleDelete(id, retryCount + 1), 1000);
+      } else {
+        console.error('상품 삭제 에러 : ', error);
+      }
     }
   };
 
-  const handleChat = async () => {
+  const handleChat = async (retryCount = 0) => {
     if (!item || !seller) {
       return;
     }
@@ -100,6 +115,7 @@ function ItemDetail(): JSX.Element {
         },
         navigate,
       });
+
       navigate('/chats', {
         state: {
           opponentId: seller.id,
@@ -112,7 +128,16 @@ function ItemDetail(): JSX.Element {
         },
       });
     } catch (error: any) {
-      console.log('채팅방 생성 실패 : ', error.response?.data || error.message);
+      console.error(`채팅방 생성 실패 (재시도 ${retryCount}회):`, error);
+
+      if (retryCount < 2) {
+        setTimeout(() => handleChat(retryCount + 1), 1000);
+      } else {
+        console.error(
+          '채팅방 생성 실패 : ',
+          error.response?.data || error.message,
+        );
+      }
     }
   };
 
@@ -179,7 +204,10 @@ function ItemDetail(): JSX.Element {
                 <p>수정하기</p>
               </button>
             ) : (
-              <button className="item_detail_btn mid_btn" onClick={handleChat}>
+              <button
+                className="item_detail_btn mid_btn"
+                onClick={() => handleChat()}
+              >
                 <p>채팅하기</p>
               </button>
             )}

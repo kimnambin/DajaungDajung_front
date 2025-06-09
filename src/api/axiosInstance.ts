@@ -30,6 +30,8 @@ export const authRequest = async ({
     });
     return response.data;
   } catch (error: any) {
+    console.error('API 요청 실패 : ', error);
+
     if (error.response?.status === 400) {
       const goToLogin = window.confirm(
         '로그인이 필요합니다. 로그인하시겠습니까?',
