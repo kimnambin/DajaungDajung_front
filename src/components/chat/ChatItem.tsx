@@ -33,6 +33,8 @@ const ChatItemStyle = styled.div`
   height: 100px;
   padding: 0 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
 
   .chatitem_left {
     display: flex;
