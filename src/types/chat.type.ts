@@ -1,14 +1,16 @@
+import { ChatItemInfo } from './item.type';
+
 export interface ChatRoom {
   roomId: number;
-  user1Id: number;
-  user2Id: number;
   itemId: number;
   lastMessage: string;
   updatedAt: string;
   userId: number;
   nickname: string;
   imgId: number;
+  meId: number;
   unreadCount: number;
+  itemInfo?: ChatItemInfo;
 }
 
 export interface ChatMessage {
@@ -32,13 +34,6 @@ export interface ChatUser {
   id: number;
   nickname: string;
   profileImageId: number;
-}
-
-export interface ChatItemInfo {
-  itemId: number;
-  itemTitle: string;
-  itemPrice: number;
-  itemImg: number;
 }
 
 export interface ChatRoomDetail {

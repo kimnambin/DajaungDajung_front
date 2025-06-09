@@ -1,8 +1,6 @@
 import { JSX, useEffect, useState } from 'react';
 import {
-  ChatItemInfo,
   ChatMessage as ChatMessageProps,
-  ChatRoomDetail as ChatRoomDetailProps,
   ChatRoom as ChatRoomProps,
 } from '../../types/chat.type';
 import ChatItem from './ChatItem';
@@ -13,13 +11,15 @@ import { formatDate } from '../../utils/format';
 import { Socket } from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import { authRequest } from '../../api/axiosInstance';
+import { ChatItemInfo } from '../../types/item.type';
 
 interface Props {
   room: ChatRoomProps | null;
   socket: Socket | null;
+  onRefreshRooms?: () => void;
 }
 
-function ChatRoomDetail({ room, socket }: Props): JSX.Element {
+function ChatRoomDetail({ room, socket, onRefreshRooms }: Props): JSX.Element {
   const [messages, setMessages] = useState<ChatMessageProps[]>([]);
   const [chatItem, setChatItem] = useState<ChatItemInfo | null>(null);
   const navigate = useNavigate();
@@ -41,10 +41,17 @@ function ChatRoomDetail({ room, socket }: Props): JSX.Element {
         const { item_id, item_title, item_price, item_img } = data[0];
 
         setChatItem({
-          itemId: item_id,
-          itemTitle: item_title,
-          itemPrice: item_price,
-          itemImg: item_img,
+          id: item_id,
+          imgId: item_img,
+          title: item_title,
+          price: item_price,
+        });
+      } else if (room.itemInfo) {
+        setChatItem({
+          id: room.itemInfo.id,
+          imgId: room.itemInfo.imgId,
+          title: room.itemInfo.title,
+          price: room.itemInfo.price,
         });
       }
     } catch (error) {
@@ -62,7 +69,7 @@ function ChatRoomDetail({ room, socket }: Props): JSX.Element {
     // 읽음 처리
     socket.emit('markAsRead', {
       room_id: room.roomId,
-      user_id: room.userId === room.user1Id ? room.user2Id : room.user1Id,
+      user_id: room.userId,
     });
 
     return () => {
@@ -99,7 +106,7 @@ function ChatRoomDetail({ room, socket }: Props): JSX.Element {
 
     const newMessage = {
       room_id: room.roomId,
-      sender_id: room.userId === room.user1Id ? room.user2Id : room.user1Id,
+      sender_id: room.meId,
       receiver_id: room.userId,
       contents: content,
     };
@@ -107,6 +114,8 @@ function ChatRoomDetail({ room, socket }: Props): JSX.Element {
     socket.emit('sendMessage', newMessage);
 
     await fetchMessages();
+
+    onRefreshRooms?.();
   };
 
   return (
@@ -130,9 +139,9 @@ function ChatRoomDetail({ room, socket }: Props): JSX.Element {
                 }
               />
             ))}
-            <div className="chat_input_area">
-              <ChatInput onSend={handleSend} />
-            </div>
+          </div>
+          <div className="chat_input_area">
+            <ChatInput onSend={handleSend} />
           </div>
         </>
       )}
@@ -175,7 +184,7 @@ const ChatRoomDetailStyle = styled.div`
 
 export default ChatRoomDetail;
 
-function toCamelCase(msg: any): ChatMessage {
+function toCamelCase(msg: any): ChatMessageProps {
   return {
     id: msg.id,
     roomId: msg.room_id,

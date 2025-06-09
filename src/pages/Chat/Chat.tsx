@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import ChatRoom from '../../components/chat/ChatRoom';
 import ChatRoomDetail from '../../components/chat/ChatRoomDetail';
-import React, { JSX, useEffect, useRef, useState } from 'react';
+import React, { JSX, useCallback, useEffect, useRef, useState } from 'react';
 import { ChatRoom as ChatRoomProps } from '../../types/chat.type';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { io, Socket } from 'socket.io-client';
 import { authRequest } from '../../api/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Item } from '../../types/item.type';
 
 function Chat(): JSX.Element {
   const [chatRooms, setChatRooms] = useState<ChatRoomProps[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<ChatRoomProps | null>(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as { opponentId?: number; itemInfo?: Item };
 
   const handleSelectRoom = (room: ChatRoomProps): void => {
     setSelectedRoom(room);
@@ -31,7 +34,7 @@ function Chat(): JSX.Element {
     setSelectedRoom(null);
   };
 
-  const fetchChatRooms = async () => {
+  const fetchChatRooms = useCallback(async () => {
     try {
       const data = await authRequest({
         method: 'GET',
@@ -42,22 +45,35 @@ function Chat(): JSX.Element {
 
       const parsed: ChatRoomProps[] = data.map((room: any) => ({
         roomId: room.room_id,
-        user1Id: room.user1_id,
-        user2Id: room.user2_id,
         itemId: room.item_id,
         lastMessage: room.last_message,
         updatedAt: room.updated_at,
         userId: room.user_id,
         nickname: room.nickname,
         imgId: room.img_id,
+        meId: room.me_id,
         unreadCount: Number(room.unread_count),
       }));
 
+      // 최신순 정렬 (optional, 서버에서 이미 정렬해주는 경우 생략 가능)
+      parsed.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+
       setChatRooms(parsed);
+
+      if (state?.opponentId && state?.itemInfo) {
+        const matchedRoom = parsed.find(
+          (room) =>
+            room.userId === state.opponentId &&
+            room.itemId === state.itemInfo?.id,
+        );
+        if (matchedRoom) {
+          setSelectedRoom({ ...matchedRoom, itemInfo: state.itemInfo });
+        }
+      }
     } catch (error) {
       console.error('채팅방 목록 가져오기 실패:', error);
     }
-  };
+  }, [navigate, state?.opponentId, state?.itemInfo]);
 
   useEffect(() => {
     fetchChatRooms();
@@ -75,30 +91,19 @@ function Chat(): JSX.Element {
 
     socketRef.current = socket;
 
-    socket.on('connect', () => {
+    socket.on('connection', () => {
       console.log('소켓 연결됨:', socket.id);
       setConnectionError(false);
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on('error', (err) => {
       console.log('소켓 연결 에러:', err.message);
-      setConnectionError(true);
-    });
-
-    socket.on('reconnect_attempt', (attempt) => {
-      console.log(`재접속 시도 #${attempt}`);
-    });
-
-    socket.on('reconnect_failed', () => {
-      console.log('재접속 실패: 최대 시도 초과');
-      alert('서버에 연결할 수 없습니다. 나중에 다시 시도해주세요.');
       setConnectionError(true);
     });
 
     socket.on('disconnect', (reason) => {
       console.log('연결 끊김:', reason);
       if (reason === 'io server disconnect') {
-        // 서버가 연결을 끊은 경우, 수동 재연결 필요
         socket.connect();
       }
     });
@@ -131,7 +136,11 @@ function Chat(): JSX.Element {
             </div>
           </div>
           <div className="chat_room_detail">
-            <ChatRoomDetail room={selectedRoom} socket={socketRef.current} />
+            <ChatRoomDetail
+              room={selectedRoom}
+              socket={socketRef.current}
+              onRefreshRooms={fetchChatRooms}
+            />
           </div>
         </>
       )}

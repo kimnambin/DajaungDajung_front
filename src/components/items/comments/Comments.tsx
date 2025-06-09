@@ -4,8 +4,19 @@ import delete_btn from '../../../assets/ic_x.svg';
 import { getImgSrc } from '../../../utils/image';
 import { authRequest } from '../../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { Comment } from '../../../types/comment.type';
 
-const Comments = ({ comments, item_id, onCommentAdded }) => {
+interface CommentsProps {
+  comments: Comment[];
+  itemId: number;
+  onCommentAdded: () => void;
+}
+
+const Comments: React.FC<CommentsProps> = ({
+  comments,
+  itemId,
+  onCommentAdded,
+}) => {
   const navigate = useNavigate();
 
   const [newComment, setNewComment] = useState('');
@@ -18,7 +29,7 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
     try {
       await authRequest({
         method: 'post',
-        url: `/comments/${item_id}`,
+        url: `/comments/${itemId}`,
         data: { contents: newComment },
         navigate,
       });
@@ -29,7 +40,7 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
     }
   };
 
-  const deleteComment = async (comment_id) => {
+  const deleteComment = async (commentId: number) => {
     try {
       const confirmDelete = window.confirm('댓글을 삭제하시겠습니까?');
       if (!confirmDelete) {
@@ -38,11 +49,11 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
 
       await authRequest({
         method: 'delete',
-        url: `/comments/${comment_id}`,
+        url: `/comments/${commentId}`,
         navigate,
       });
       onCommentAdded();
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.status === 403) {
         alert('본인의 댓글만 삭제할 수 있습니다.');
       } else if (error.response?.status === 401) {
@@ -53,14 +64,6 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
     }
   };
 
-  const handleComment = () => {
-    addComment();
-  };
-
-  const handleDeleteComment = (comment_id) => {
-    deleteComment(comment_id);
-  };
-
   return (
     <div className="comments_container">
       <div className="comment_input_wrapper">
@@ -69,7 +72,7 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={handleComment}>입력</button>
+        <button onClick={addComment}>입력</button>
       </div>
 
       <div className="comment_container">
@@ -79,9 +82,9 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
         </div>
 
         {comments.map((comment) => (
-          <div className="comment">
+          <div className="comment" key={comment.id}>
             <img
-              src={getImgSrc(comment.img_id)}
+              src={getImgSrc(comment.imgId)}
               width={50}
               style={{ borderRadius: '100px' }}
             />
@@ -89,10 +92,7 @@ const Comments = ({ comments, item_id, onCommentAdded }) => {
               <p className="comment_nickname">{comment.nickname}</p>
               <p className="comment_txt">{comment.contents}</p>
             </div>
-            <img
-              src={delete_btn}
-              onClick={() => handleDeleteComment(comment.id)}
-            />
+            <img src={delete_btn} onClick={() => deleteComment(comment.id)} />
           </div>
         ))}
       </div>
