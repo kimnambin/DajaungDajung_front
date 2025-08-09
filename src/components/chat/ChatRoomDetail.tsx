@@ -2,7 +2,7 @@ import { JSX, useEffect, useState } from 'react';
 import {
   ChatMessage as ChatMessageProps,
   ChatRoom as ChatRoomProps,
-} from '../../types/chat.type';
+} from '../../types/chat.model';
 import ChatItem from './ChatItem';
 import styled from 'styled-components';
 import ChatInput from './ChatInput';
@@ -11,7 +11,7 @@ import { formatDate } from '../../utils/format';
 import { Socket } from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import { authRequest } from '../../api/axiosInstance';
-import { ChatItemInfo } from '../../types/item.type';
+import { ChatItemInfo } from '../../types/item.model';
 
 interface Props {
   room: ChatRoomProps | null;

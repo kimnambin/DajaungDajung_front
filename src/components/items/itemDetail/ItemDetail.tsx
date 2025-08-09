@@ -11,9 +11,9 @@ import { formatNumber } from '../../../utils/format.js';
 import { getImgSrc } from '../../../utils/image.js';
 import Comments from '../comments/Comments';
 import './ItemDetail.css';
-import { Comment } from '../../../types/comment.type.js';
-import { ItemDetail as ItemDetailProps } from '../../../types/item.type.js';
-import { Seller } from '../../../types/user.type.js';
+import { Comment } from '../../../types/comment.model.js';
+import { ItemDetail as ItemDetailProps } from '../../../types/item.model.js';
+import { Seller } from '../../../types/user.model.js';
 import camelcaseKeys from 'camelcase-keys';
 
 function ItemDetail(): JSX.Element {

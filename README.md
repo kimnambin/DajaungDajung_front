@@ -1,83 +1,60 @@
-# ☀️ FE README
+<div align="center">
 
-## 👥 팀원 
-| Frontend | Frontend | Fronted |
-| :-----: | :-----: | :------: |
-| <img src="https://avatars.githubusercontent.com/u/109705781?v=4" width=200px alt="강민경"/> | <img src="https://avatars.githubusercontent.com/u/86221268?v=4" width=200px alt="김성윤"/> | <img src="https://avatars.githubusercontent.com/u/86095931?v=4" width=200px alt="김태진"/> |
-| [강민경](https://github.com/mingyeong0210)|[김성윤](https://github.com/tjddbs531)|[김태진](https://github.com/crossbat)|
-| 상품 검색, 등록, 조회, 수정 | 메인, 로그인, 회원가입 | 유저 프로필, 마이페이지 |
+![header](https://capsule-render.vercel.app/api?type=waving&color=e6e6fa&text=%20다중다중&animation=twinkling&fontSize=70&fontAlignY=40&fontAlign=50&height=250)
 
-<br>
+</div>
 
-## 🎯 프로젝트 목표  
-- 사용자 중심 중고거래 플랫폼 개발  
-- 로그인/회원 관리부터 상품 등록/조회, 마이페이지 기능까지 구현  
-- 실시간 거래 메시지 및 좋아요 기반 추천 UX 구축
+<br/>
+<br/>
 
-<br>
+# 🎯 프로젝트 개요
 
-## 🛠️ 사용 기술 및 도구  
+다중다중은 **중고거리 플랫폼** 입니다.
 
-| 항목 | 사용 도구 |
-|------|-----------|
-| 코드 에디터 | Visual Studio Code |
-| 라이브러리 | React |
-| 빌드툴 | Vite |
-| 언어 | JavaScript |
-| 패키지 관리 | npm |
-| 디자인 툴 | Figma |
-| 협업 도구 | Notion, Slack |
+<!-- 서비스 : <a href="https://www.fundmates.shop/" target="_blank">펀드 메이트 (현재는 서버 종료)</a> -->
 
-<br>
+<br/>
+<br/>
 
-## 📁 Git 컨벤션
+## 👥 개발 기간 및 팀원
 
-### 브랜치 네이밍 규칙  
-(수정옵션)/기능설명
-ex) feat/login-api
+- 개발 기간 : 2025/05 - 2025/06 (1개월)
+- 팀원 소개 : 프론트 4명 / 백 4명
 
-<br>
+<br/>
+<br/>
 
-### 커밋 규칙  
+## 📜 주요 기능
 
-**Body**는 Header에서 표현할 수 없는 **상세한 내용**을 적는다.
+우리 서비스의 핵심 기능은 2가지입니다.
 
-Header에서 충분히 표현할 수 있다면 **생략 가능**하다.
+- 중고 **`상품 등록/조회`**
+- 실시간 거래를 위한 **`채팅`**
 
-**Footer**는 바닥글로 어떤 이슈에서 왔는지 같은 **참조 정보들을 추가**하는 용도로 사용한다.
+<br/>
+<br/>
 
-예를 들어 특정 이슈를 참조하려면 Issues #1234 와 같이 작성하면 된다.
+## 📺 화면 구성
 
-Footer는 **생략 가능**하다.
+|                                                                                                                                                                      메인 페이지                                                                                                                                                                       |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="300px" src="https://file.notion.so/f/f/74ada54e-e835-4d89-8091-d7b1b5b77968/a8cfd295-8dc2-4a45-b8eb-03985cad80d1/main.png?table=block&id=22dd9d07-eb6f-8129-acf4-cf05034103e9&spaceId=74ada54e-e835-4d89-8091-d7b1b5b77968&expirationTimestamp=1754748000000&signature=l569YVZQ_bOiqghF6wGccA1p7O3S4TwGRprLKvBHKsc&downloadName=main.png"> |
 
-<br>
+|                                                                                                                                                                      채팅 페이지                                                                                                                                                                       |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="300px" src="https://file.notion.so/f/f/74ada54e-e835-4d89-8091-d7b1b5b77968/bab2ab9a-f897-47fb-9522-f6bd92d999d6/chat.png?table=block&id=22dd9d07-eb6f-81fd-853c-ccae042f21a0&spaceId=74ada54e-e835-4d89-8091-d7b1b5b77968&expirationTimestamp=1754748000000&signature=CecTgcS1aGL1h5-ycYgW_RjRfMTesKMjHDRyqRJrGZQ&downloadName=chat.png"> |
 
-### 메세지 구조
-```
-// Header, Body, Footer는 빈 행으로 구분한다.
-타입(스코프): 주제(제목) // Header(헤더)
-본문 // Body(바디)
-바닥글 // Footer
+<br/>
+<br/>
 
-//예시
-git commit -m "fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정
-모바일 사파리에서 Carousel 모달을 띄웠을 때,
-모달 밖의 상하 스크롤이 움직이는 이슈 수정.
-resolves: #1137
-```
+## 🔬 기술 스택
 
-<br>
+| 기술 스택          | 설명                                                                          | 로고                                                                                                                         |
+| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **React**          | “사용자 경험을 최적화하는 구조적 UI 개발 도구                                 | ![React Badge](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)                    |
+| **Tailwind CSS**   | Tailwind의 빠른 스타일링을 위해 사용                                          | ![TailwindCSS Badge](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)  |
+| **TypeScript**     | JavaScript에 정적 타입을 추가하여 사전 오류 방지                              | ![TypeScript Badge](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)      |
+| **TanStack-query** | 서버 상태 관리를 간편하게 해주며, 데이터 패칭, 캐싱 및 동기화를 자동으로 처리 | ![TanStack Query](https://img.shields.io/badge/TanStack%20Query-E53E3E?style=for-the-badge&logo=react-query&logoColor=white) |
+| **Jest**           | 빠르고 직관적인 테스트 환경 제공                                              | ![Jest Badge](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)                        |
 
-### 커밋 타입 목록
-
-| 타입  | 설명                              |
-|-------|-----------------------------------|
-| feat  | 새로운 기능에 대한 커밋           |
-| fix   | 버그 수정에 대한 커밋             |
-| build | 빌드 관련 파일 수정/모듈 설치, 삭제 |
-| chore | 기타 자잘한 수정                  |
-| ci    | CI 설정 수정                      |
-| docs  | 문서 수정                         |
-| style | 코드 스타일/포맷 수정             |
-| test  | 테스트 코드 수정                  |
-| perf  | 성능 개선에 대한 커밋             |
+<br/>

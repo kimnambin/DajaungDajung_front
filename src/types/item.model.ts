@@ -1,4 +1,4 @@
-import { Seller } from './user.type';
+import { Seller } from './user.model';
 
 export interface Item {
   id: number;

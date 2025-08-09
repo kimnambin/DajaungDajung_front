@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import ChatRoom from '../../components/chat/ChatRoom';
 import ChatRoomDetail from '../../components/chat/ChatRoomDetail';
 import React, { JSX, useCallback, useEffect, useRef, useState } from 'react';
-import { ChatRoom as ChatRoomProps } from '../../types/chat.type';
+import { ChatRoom as ChatRoomProps } from '../../types/chat.model';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { io, Socket } from 'socket.io-client';
 import { authRequest } from '../../api/axiosInstance';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Item } from '../../types/item.type';
+import { Item } from '../../types/item.model';
 
 function Chat(): JSX.Element {
   const [chatRooms, setChatRooms] = useState<ChatRoomProps[]>([]);

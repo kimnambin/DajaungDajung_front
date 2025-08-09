@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getImgSrc } from '../../utils/image';
 import { formatNumber } from '../../utils/format';
 import { useNavigate } from 'react-router-dom';
-import { ChatItemInfo } from '../../types/item.type';
+import { ChatItemInfo } from '../../types/item.model';
 
 interface Props {
   item: ChatItemInfo;

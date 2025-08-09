@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import defaultProfile from '../../assets/default_profile.svg';
-import { ChatRoom as ChatRoomProps } from '../../types/chat.type';
+import { ChatRoom as ChatRoomProps } from '../../types/chat.model';
 import { JSX } from 'react';
 import { getDaysAgo } from '../../utils/date';
 import { getImgSrc } from '../../utils/image';

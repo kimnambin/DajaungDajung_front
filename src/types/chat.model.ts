@@ -1,4 +1,4 @@
-import { ChatItemInfo } from './item.type';
+import { ChatItemInfo } from './item.model';
 
 export interface ChatRoom {
   roomId: number;
