@@ -1,0 +1,43 @@
+{
+  // 문서화할 엔트리 포인트 디렉토리 (보통 소스 코드가 있는 폴더)
+  "entryPoints": ["src"],
+
+  // 엔트리 포인트 전략: 'expand'는 src 내부의 모든 파일을 자동으로 포함
+  "entryPointStrategy": "expand",
+
+  // 생성된 문서를 저장할 디렉토리
+  "out": "docs",
+
+  // 문서 생성 전에 기존 docs 디렉토리를 삭제
+  "cleanOutputDir": true,
+
+  // README 파일을 포함하지 않음
+  "readme": "none",
+
+  // TypeScript 설정 파일 경로
+  "tsconfig": "./tsconfig.json",
+
+  // private 멤버는 문서에서 제외
+  "excludePrivate": true,
+
+  // protected 멤버도 문서에서 제외
+  "excludeProtected": true,
+
+  // 외부 모듈(external modules)은 문서에 포함
+  "excludeExternals": false,
+
+  // 문서에 프로젝트 버전 정보 포함
+  "includeVersion": true,
+
+  // 소스 코드 링크를 문서에 포함 (false면 포함함)
+  "disableSources": false,
+
+  // 그룹별로 문서 항목을 분류
+  "categorizeByGroup": true,
+
+  // 주석 내용에서 검색하지 않음
+  "searchInComments": false,
+
+  // 타입 오류 무시하고 문서 생성
+  "skipErrorChecking": true
+}
