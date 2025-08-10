@@ -1,13 +1,17 @@
-import React from 'react';
 import './Category.css';
 import selectedIcon from '../../../assets/ic_selected.svg';
 import unselectedIcon from '../../../assets/ic_unselected.svg';
 import { useNavigate } from 'react-router-dom';
+import { CategoryProps, ClickCategory } from '../../../types/item.model';
 
-const Category = ({ selectedCategory, keyword, categories }) => {
+const Category = ({ selectedCategory, keyword, categories }: CategoryProps) => {
   const navigate = useNavigate();
 
-  const handleClickCategory = (categoryId, categoryName) => {
+  const handleClickCategory = (
+    _id: number,
+    _category: string,
+    { categoryId, categoryName }: ClickCategory,
+  ) => {
     if (categoryName === '전체') {
       navigate(`/items?q=${keyword}`);
     } else {
@@ -25,7 +29,12 @@ const Category = ({ selectedCategory, keyword, categories }) => {
         <div
           className="category"
           key={category.id}
-          onClick={() => handleClickCategory(category.id, category.category)}
+          onClick={() =>
+            handleClickCategory(category.id, category.category, {
+              categoryId: category.id,
+              categoryName: category.category,
+            })
+          }
         >
           {Number(selectedCategory) === category.id ? (
             <>

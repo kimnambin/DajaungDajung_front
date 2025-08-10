@@ -1,6 +1,12 @@
+import { SigupProps } from '../types/user.model';
 import axiosInstance from './axiosInstance';
 
-export const getSearchItems = (query, category) => {
+interface SearchParams {
+  query?: string;
+  category?: string | null;
+}
+
+export const getSearchItems = ({ query, category }: SearchParams) => {
   const params = new URLSearchParams();
   if (query) params.append('q', query);
   if (category) params.append('category', category);
@@ -8,9 +14,7 @@ export const getSearchItems = (query, category) => {
   return axiosInstance.get(`/items?${params.toString()}`);
 };
 
-export const getItemDetail = id => axiosInstance(`/items/${id}`);
-
-export const postItem = credentials =>
+export const postItem = (credentials: SigupProps) =>
   axiosInstance.post(`/items`, credentials);
 
-export const deleteItem = id => axiosInstance.delete(`/items/${id}`);
+export const deleteItem = (id: number) => axiosInstance.delete(`/items/${id}`);

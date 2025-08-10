@@ -6,7 +6,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 import { createPortal } from 'react-dom';
 
-function DropdownPortal({ children }) {
+function DropdownPortal({ children }: { children: React.ReactNode }) {
   return createPortal(children, document.body);
 }
 
@@ -17,8 +17,8 @@ function Header() {
   const [dropdownPos, setDropDownPos] = useState({ top: 0, left: 0 });
   const navigate = useNavigate();
   const location = useLocation();
-  const dropdownRef = useRef(null);
-  const wrapperRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedNickname = localStorage.getItem('nickname');
@@ -26,7 +26,7 @@ function Header() {
     setShowDropdown(false);
   }, [location]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (searchInput.trim() === '') {
       return;
@@ -66,12 +66,12 @@ function Header() {
   }, [showDropdown]);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(e.target) &&
+        !dropdownRef.current.contains(e.target as Node) &&
         wrapperRef.current &&
-        !wrapperRef.current.contains(e.target)
+        !wrapperRef.current.contains(e.target as Node)
       ) {
         setShowDropdown(false);
       }

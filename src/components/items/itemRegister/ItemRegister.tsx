@@ -1,190 +1,209 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authRequest } from '../../../api/axiosInstance';
 import { getCategories } from '../../../api/categoryApi';
 import SampleImg from '../../../assets/sampleImg.svg';
 import { formatNumber } from '../../../utils/format';
 import './ItemRegister.css';
+import { ItemDetail } from '../../../types/item.model';
 
-const onlyNumber = (str) => str.replace(/[^0-9]/g, '');
+const onlyNumber = (str: string) => str.replace(/[^0-9]/g, '');
 
-const ItemRegister = ({ isEdit = false, item = null }) => {
-    const fileInputRef = useRef(null);
-    const navigate = useNavigate();
+type CategoryType = {
+  id: string | number;
+  category: string;
+};
 
-    const [preview, setPreview] = useState(SampleImg);
-    const [form, setForm] = useState({
-        title: '',
-        category: '',
-        price: '',
-        contents: ''
-    });
-    const [categories, setCategories] = useState([]);
+interface ItemRegisterProps {
+  isEdit?: boolean;
+  item?: ItemDetail | null;
+}
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await getCategories();
-                setCategories(response.data);
-            } catch (error) {
-                console.log('카테고리 조회 에러 : ', error);
-            }
-        };
+const ItemRegister = ({ isEdit = false, item = null }: ItemRegisterProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
-        fetchCategories();
+  const [preview, setPreview] = useState<string>(SampleImg);
+  const [form, setForm] = useState({
+    title: '',
+    category: '',
+    price: '',
+    contents: '',
+  });
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
-        if (isEdit && item) {
-          setForm({
-            title: item.title || '',
-            category: item.category_id || '',
-            price: item.price ? formatNumber(item.price) : '',
-            contents: item.contents || ''
-          });
-          if (item.imageUrl) {
-            setPreview(item.imageUrl);
-          }
-        }
-      }, [isEdit, item]);
-      
-    const handleUploadClick = () => {
-        fileInputRef.current.click();
-    }
-
-    const handleFileChange = (e) => {
-        const file = e.target.files?.[0];
-        if(file) {
-            const imageUrl = URL.createObjectURL(file);
-            setPreview(imageUrl);
-        }
-    }
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-    
-        if (name === 'price') {
-          const onlyNums = onlyNumber(value);
-          setForm((prev) => ({
-            ...prev,
-            [name]: formatNumber(onlyNums)
-          }));
-        } else {
-          setForm((prev) => ({
-            ...prev,
-            [name]: value
-          }));
-        }
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getCategories();
+        setCategories(response.data);
+      } catch (error) {
+        console.log('카테고리 조회 에러 : ', error);
+      }
     };
-    
-    const handleSubmit = async () => {
+
+    fetchCategories();
+
+    if (isEdit && item) {
+      setForm({
+        title: item.title || '',
+        category: item.categoryId ? String(item.categoryId) : '',
+        price: item.price ? formatNumber(item.price) : '',
+        contents: item.contents || '',
+      });
+      if (item.imageUrl) {
+        setPreview(item.imageUrl);
+      }
+    }
+  }, [isEdit, item]);
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreview(imageUrl);
+    }
+  };
+
+  const handleChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+
+    if (name === 'price') {
+      const onlyNums = onlyNumber(value);
+      setForm((prev) => ({
+        ...prev,
+        [name]: formatNumber(Number(onlyNums)),
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSubmit = async () => {
     const cleanPrice = Number(onlyNumber(form.price));
 
     const dataToSubmit = {
-        ...form,
-        price: cleanPrice,
-        img_id: 1, // ✅ 이미지 업로드 구현 후 수정 필요 
+      ...form,
+      price: cleanPrice,
+      img_id: 1, // TODO : 수정 필요
     };
 
     if (isEdit) {
-        try {
-            console.log(dataToSubmit);
-            await authRequest({
-                method: 'put',
-                url: `/items/${item.id}`,
-                data: dataToSubmit,
-                navigate,
-            });            
-            alert('상품이 수정되었습니다!');
-            navigate(`/items/${item.id}`);
-        } catch (error) {
-            console.log('상품 수정 오류 : ', error);
+      try {
+        console.log(dataToSubmit);
+        if (!item) {
+          alert('수정할 상품 정보가 없습니다.');
+          return;
         }
+        await authRequest({
+          method: 'put',
+          url: `/items/${item.id}`,
+          data: dataToSubmit,
+          navigate,
+        });
+        alert('상품이 수정되었습니다!');
+        navigate(`/items/${item.id}`);
+      } catch (error) {
+        console.log('상품 수정 오류 : ', error);
+      }
     } else {
-        try {
-            console.log(dataToSubmit);
-            const response = await authRequest({
-                method: 'post',
-                url: `/items`,
-                data: dataToSubmit,
-                navigate,
-            });            
-            alert('상품이 등록되었습니다!');
-            navigate(`/items/${response.insertId}`);
-        } catch (error) {
-            console.log('상품 등록 오류 : ', error);
-        }
+      try {
+        console.log(dataToSubmit);
+        const response = await authRequest({
+          method: 'post',
+          url: `/items`,
+          data: dataToSubmit,
+          navigate,
+        });
+        alert('상품이 등록되었습니다!');
+        navigate(`/items/${response.insertId}`);
+      } catch (error) {
+        console.log('상품 등록 오류 : ', error);
+      }
     }
-    };
+  };
 
-    return (
-        <div className='item_create_container'>
-            <h1 className='sell_title'>{isEdit ? '수정하기' : '판매하기'}</h1>
+  return (
+    <div className="item_create_container">
+      <h1 className="sell_title">{isEdit ? '수정하기' : '판매하기'}</h1>
 
-            <section className='item_img_upload'>
-                <img src={preview}></img>
-                <button 
-                    className='item_img_upload_btn'
-                    type='button'
-                    onClick={handleUploadClick}
-                >
-                    업로드
-                </button>
-                <input 
-                    type='file'
-                    accept='image/*'
-                    style={{display: 'none'}}
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                />
-            </section>
+      <section className="item_img_upload">
+        <img src={preview}></img>
+        <button
+          className="item_img_upload_btn"
+          type="button"
+          onClick={handleUploadClick}
+        >
+          업로드
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          ref={fileInputRef}
+          onChange={handleFileChange}
+        />
+      </section>
 
-            <section className='item_create_input_container'>
-                <input 
-                    className='item_create_input' 
-                    name='title'
-                    placeholder='제목'
-                    value={form.title}
-                    onChange={handleChange}
-                />
-                <select 
-                    className='item_create_select'
-                    name='category'
-                    value={form.category}
-                    onChange={handleChange}
-                >
-                    <option value="">카테고리를 선택하세요</option>
-                    {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.category}
-                        </option>
-                    ))}
-                </select>
-                <input 
-                    className='item_create_input' 
-                    name='price'
-                    placeholder='가격'
-                    value={form.price}
-                    onChange={handleChange}
-                />
-                <textarea 
-                    className='item_create_input'
-                    name='contents'
-                    placeholder='설명'
-                    value={form.contents}
-                    onChange={handleChange}
-                    style={{
-                        height: '200px', 
-                        resize: 'vertical', 
-                        whiteSpace: 'pre-wrap', 
-                        overflowWrap: 'break-word'
-                        }}
-                />
-            </section>
+      <section className="item_create_input_container">
+        <input
+          className="item_create_input"
+          name="title"
+          placeholder="제목"
+          value={form.title}
+          onChange={handleChange}
+        />
+        <select
+          className="item_create_select"
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+        >
+          <option value="">카테고리를 선택하세요</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.category}
+            </option>
+          ))}
+        </select>
+        <input
+          className="item_create_input"
+          name="price"
+          placeholder="가격"
+          value={form.price}
+          onChange={handleChange}
+        />
+        <textarea
+          className="item_create_input"
+          name="contents"
+          placeholder="설명"
+          value={form.contents}
+          onChange={handleChange}
+          style={{
+            height: '200px',
+            resize: 'vertical',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'break-word',
+          }}
+        />
+      </section>
 
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-            <button className='item_create_btn' onClick={handleSubmit}>작성 완료</button>
-            </div>
-        </div>
-    )
-}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button className="item_create_btn" onClick={handleSubmit}>
+          작성 완료
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default ItemRegister;

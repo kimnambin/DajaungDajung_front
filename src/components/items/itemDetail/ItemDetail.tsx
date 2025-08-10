@@ -1,4 +1,4 @@
-import React, { JSX, useCallback, useEffect, useState } from 'react';
+import { JSX, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { authRequest } from '../../../api/axiosInstance.js';
 import { getComments } from '../../../api/commentsApi';
@@ -32,7 +32,8 @@ function ItemDetail(): JSX.Element {
 
   const fetchCommentData = useCallback(async () => {
     try {
-      const response = await getComments(id);
+      if (!id) return;
+      const response = await getComments(Number(id));
       setComments(camelcaseKeys(response.data));
       console.log(response.data);
     } catch (err) {
@@ -43,7 +44,7 @@ function ItemDetail(): JSX.Element {
   useEffect(() => {
     const fetchItemDetailData = async () => {
       try {
-        const response = await getItemDetail(id);
+        const response = await getItemDetail(Number(id));
         const camelizedItem = camelcaseKeys(response.data.item, { deep: true });
         setItem(camelizedItem);
         setSeller(camelcaseKeys(response.data.user));

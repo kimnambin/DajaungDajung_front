@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FindId.css';
 import axiosInstance from '../../api/axiosInstance';
@@ -11,26 +11,29 @@ const FindId = () => {
     contact: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const sanitizedContact = form.contact
+    const sanitizedContact = form.contact;
 
-    axiosInstance.post('/auth/findid', {
-      name: form.name,
-      contact: sanitizedContact
-    }).then((res) => {
-      alert(`가입된 이메일은 다음과 같습니다:\n\n📧 ${res.data.email}`);
-      navigate('/signin');
-    }).catch(err => {
-      console.error('아이디 찾기 오류:', err);
-      alert('일치하는 회원 정보가 없습니다.');
-    })
+    axiosInstance
+      .post('/auth/findid', {
+        name: form.name,
+        contact: sanitizedContact,
+      })
+      .then((res) => {
+        alert(`가입된 이메일은 다음과 같습니다:\n\n📧 ${res.data.email}`);
+        navigate('/signin');
+      })
+      .catch((err) => {
+        console.error('아이디 찾기 오류:', err);
+        alert('일치하는 회원 정보가 없습니다.');
+      });
   };
 
   return (
@@ -55,7 +58,9 @@ const FindId = () => {
           required
         />
         <div className="findid-divider" />
-        <button type="submit" className="button button--primary">아이디 찾기</button>
+        <button type="submit" className="button button--primary">
+          아이디 찾기
+        </button>
       </form>
     </div>
   );

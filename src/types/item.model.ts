@@ -5,7 +5,7 @@ export interface Item {
   imgId: number;
   title: string;
   price: number;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface ItemDetail {
@@ -17,6 +17,7 @@ export interface ItemDetail {
   price: number;
   createdAt: string;
   contents: string;
+  imageUrl?: string;
   like: number;
   liked?: string;
   seller?: string;
@@ -28,4 +29,19 @@ export interface ChatItemInfo {
   imgId: number;
   title: string;
   price: number;
+}
+
+export interface CategoryProps {
+  selectedCategory: number | string;
+  keyword: string;
+  categories: { id: number; category: string }[];
+}
+
+export interface ClickCategory {
+  categoryId: number | string;
+  categoryName: string;
+}
+
+export interface IdParameter {
+  id: number | string;
 }
