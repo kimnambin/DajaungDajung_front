@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ResetPwd.css';
-const {VITE_BACK_URL}=import.meta.env
+const { VITE_BACK_URL } = import.meta.env;
 
 const ResetPwd = () => {
   const navigate = useNavigate();
@@ -13,12 +13,12 @@ const ResetPwd = () => {
     phone: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sanitizedPhone = form.phone.replace(/[^0-9]/g, '');
 
@@ -32,7 +32,7 @@ const ResetPwd = () => {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       console.log('응답 결과:', response.data);

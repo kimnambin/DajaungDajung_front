@@ -12,11 +12,8 @@ import FindId from './pages/FindId/FindId';
 import ResetPwd from './pages/ResetPwd/ResetPwd';
 import NewPwd from './pages/NewPwd/NewPwd';
 
-// TODO : 임시로 사용 중
 import DajungDajung from './pages/MainHome/DajungDajung';
-// import DajungDajung from './pages/MainHome/DajungDajungTest';
 import UserInfos from './pages/UserInfos/userInfos';
-import UserInfo from './components/userInfo/userInfo';
 import MyPage from './pages/MyPage/myPage';
 import UpdateInfo from './components/updateInfo/UpdateInfo';
 import Unsubscribe from './pages/unsubscribe/Unsubscribe';
@@ -46,7 +43,7 @@ function App() {
             <Route path="/newpwd" element={<NewPwd />} />
             <Route path="/" element={<DajungDajung />} />
             <Route path="/users" element={<MyPage />}>
-              <Route path="mypage" element={<UserInfo />} />
+              <Route path="mypage" element={<MyPage />} />
               <Route path="mypage/update" element={<UpdateInfo />} />
               <Route path="unsubscribe" element={<Unsubscribe />} />
               <Route path="upload" element={<UploadItems />} />

@@ -1,11 +1,5 @@
-import React from 'react'
+const Map = () => {
+  return <div>Map</div>;
+};
 
-type Props = {}
-
-const Map = (props: Props) => {
-  return (
-    <div>Map</div>
-  )
-}
-
-export default Map
+export default Map;

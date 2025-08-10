@@ -1,13 +1,16 @@
-import { useState } from "react";
-import Pagination from "../../components/Pagination/pagination";
-import SaleItemCard from "../../components/saleItemCard/saleItemCard";
-import style from './UploadItems.module.css'
-import { useOutletContext } from "react-router-dom";
-import { FaCartShopping } from "react-icons/fa6";
+import { useState } from 'react';
+import Pagination from '../../components/Pagination/pagination';
+import SaleItemCard from '../../components/saleItemCard/saleItemCard';
+import style from './UploadItems.module.css';
+import { useOutletContext } from 'react-router-dom';
+import { FaCartShopping } from 'react-icons/fa6';
+import { ItemDetail } from '../../types/item.model';
+import { OutletContextType } from '../../types/outletContext.model';
 
 export default function UploadItems() {
-  const { contextUserItemData, setContextUserItemData } = useOutletContext();
-  const [page, setPage] = useState(1)
+  const { contextUserItemData, setContextUserItemData } =
+    useOutletContext<OutletContextType>();
+  const [page, setPage] = useState(1);
   const itemPerPage = 6;
   const indexOfLast = page * itemPerPage;
   const indexOfFirst = indexOfLast - itemPerPage;
@@ -16,29 +19,33 @@ export default function UploadItems() {
 
   return (
     <>
-      <div className={contextUserItemData.length === 0 ? style.mainContainer : ''}>
-        {
-          contextUserItemData.length !== 0 ? (
-            <>
-              <div className={style.UploadContainer}>
-                {currentitems.map((item) => (
-                  <SaleItemCard item={item} setItem={setContextUserItemData} />
-                ))}
-              </div>
-              <div>
-                <Pagination totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
-              </div>
-            </>
-          ) : (
-            <>
-              <div>
-                <FaCartShopping />
-                <p>상품이 없습니다.</p>
-              </div>
-            </>
-          )
-        }
+      <div
+        className={contextUserItemData.length === 0 ? style.mainContainer : ''}
+      >
+        {contextUserItemData.length !== 0 ? (
+          <>
+            <div className={style.UploadContainer}>
+              {currentitems.map((item: ItemDetail) => (
+                <SaleItemCard item={item} setItem={setContextUserItemData} />
+              ))}
+            </div>
+            <div>
+              <Pagination
+                totalPages={totalPages}
+                currentPage={page}
+                setCurrentPage={setPage}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <FaCartShopping />
+              <p>상품이 없습니다.</p>
+            </div>
+          </>
+        )}
       </div>
     </>
-  )
+  );
 }

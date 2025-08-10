@@ -4,7 +4,11 @@ import { getImgSrc } from '../../utils/image';
 import styles from './cardItems.module.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function CardItems(item: Item) {
+interface CardItemsProps {
+  item: Item;
+}
+
+export default function CardItems({ item }: CardItemsProps) {
   const navigate = useNavigate();
   return (
     <>

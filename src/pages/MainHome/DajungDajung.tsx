@@ -1,33 +1,32 @@
-import {useState, useEffect, useRef} from 'react';
-import {Link} from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 import './DajungDajung.css';
 import banner1 from '../../assets/banner1.png';
 import banner2 from '../../assets/banner2.png';
-import {getImgSrc} from '../../utils/image';
-import {ProductProps} from '../../types/product.model';
-import {useQuery} from '@tanstack/react-query';
-import {fetchProductList} from '../../api/productApi';
+import { getImgSrc } from '../../utils/image';
+import { useQuery } from '@tanstack/react-query';
+import { fetchProductList } from '../../api/productApi';
+import { Item } from '../../types/item.model';
 
 const bannerImages = [banner1, banner2];
 const ITEMS_PER_PAGE = 12;
 
 const DajungDajung = () => {
-  const [showProducts, setShowProducts] = useState<ProductProps[]>([]);
+  const [showProducts, setShowProducts] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [bannerIndex, setBannerIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const {data: products = [], isLoading: isQueryLoading} = useQuery({
+  const { data: products = [], isLoading: isQueryLoading } = useQuery({
     queryKey: ['getProduct'],
     queryFn: fetchProductList,
   });
 
-  // 위치가 하단 시 호출
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore) {
         loadMoreItems();
       }
@@ -45,7 +44,7 @@ const DajungDajung = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBannerIndex(prev => (prev + 1) % bannerImages.length);
+      setBannerIndex((prev) => (prev + 1) % bannerImages.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -55,7 +54,13 @@ const DajungDajung = () => {
     if (products.length > 0) {
       const start = 0;
       const end = ITEMS_PER_PAGE;
-      const nextItems = products.slice(start, end);
+      const nextItems = products.slice(start, end).map((product) => ({
+        id: product.id,
+        price: product.price,
+        createdAt: product.createdAt,
+        imgId: product.imgId,
+        title: product.title,
+      }));
 
       setShowProducts(nextItems);
       setCurrentPage(2);
@@ -78,8 +83,8 @@ const DajungDajung = () => {
       return;
     }
 
-    setShowProducts(prev => [...prev, ...nextItems]);
-    setCurrentPage(prev => prev + 1);
+    setShowProducts((prev) => [...prev, ...nextItems]);
+    setCurrentPage((prev) => prev + 1);
     setHasMore(end < products.length);
     setIsLoading(false);
   };
@@ -92,7 +97,7 @@ const DajungDajung = () => {
             src={bannerImages[bannerIndex]}
             alt="배너 이미지"
             className="banner-img"
-            style={{cursor: 'pointer'}}
+            style={{ cursor: 'pointer' }}
           />
         </Link>
       </div>
@@ -102,24 +107,25 @@ const DajungDajung = () => {
 
         <div className="product-grid">
           {showProducts.length > 0 ? (
-            showProducts.map(item => (
+            showProducts.map((item) => (
               <Link
                 key={item.id}
                 to={`/items/${item.id}`} // 프론트 상세 페이지로 이동
-                className="product-card-link">
+                className="product-card-link"
+              >
                 <div className="product-card">
                   <img
                     className="card-image"
-                    src={getImgSrc(item.img)}
+                    src={getImgSrc(item.imgId)}
                     alt="상품 이미지"
                   />
                   <div className="card-info">
-                    <div className="card-name">{item.name}</div>
+                    <div className="card-name">{item.title}</div>
                     <div className="card-bottom">
                       <div className="card-price">
                         {Number(item.price).toLocaleString()}원
                       </div>
-                      <div className="card-time">{item.time}</div>
+                      <div className="card-time">{item.createdAt}</div>
                     </div>
                   </div>
                 </div>

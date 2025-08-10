@@ -12,8 +12,6 @@ export default function UserInfo(userData: UserDataProps) {
   );
   const navigate = useNavigate();
 
-  console.log('userData:', userData);
-
   useEffect(() => {
     if (userData) {
       setFinalUserData(userData);
